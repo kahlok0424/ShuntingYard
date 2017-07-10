@@ -1,12 +1,13 @@
 #ifndef _STACK_H
 #define _STACK_H
-#define MaxStack 12
+#define MAXSTACK 12
 
 typedef struct num_stack num_stack;
 struct num_stack{
-    int number[MaxStack];
+    int number[MAXSTACK];
     int top;
 };
 
-void push(num_stack *num_stack);
+void push(int num, num_stack *num_stack);
+int pop(num_stack *num_stack);
 #endif // _STACK_H
