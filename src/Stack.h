@@ -10,4 +10,6 @@ struct num_stack{
 
 void push(int num, num_stack *num_stack);
 int pop(num_stack *num_stack);
+void stack_init(num_stack *stack);
+
 #endif // _STACK_H

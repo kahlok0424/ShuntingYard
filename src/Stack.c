@@ -5,23 +5,31 @@
 #define stackfulled 1
 #define stackempty 2
 
-/*int stack_is_empty() {
+int stack_is_empty(num_stack *stack) {
 
-   if(top == -1)
+   if(stack->top == -1)
       return 1;
    else
       return 0;
-}*/
+}
 
 int stack_is_full(num_stack *stack) {
 
    if(stack->top == MAXSTACK){
-     printf("Error! Stack fulled!");
-   Throw(createException("The stack is fulled!", stackfulled));
+//     printf("Error! Stack fulled!");
+    Throw(createException("The stack is fulled!",
+                       stackfulled));
     return 1;
     }
-   else
+   else{
       return 0;
+    }
+}
+
+void stack_init(num_stack *stack)
+{
+//stack->number = NULL;
+  stack->top = -1;
 }
 
 void push(int num, num_stack *stack){  //function used to push element to stack
@@ -29,13 +37,13 @@ void push(int num, num_stack *stack){  //function used to push element to stack
   Try{
   if(stack_is_full(stack) ){
     printf("Error! Stack fulled!");
-    return;
   }
   else{
   // printf("Enter the number to be pushed\n");
   //  scanf("%d",&num);
-    stack->top = stack->top+1;
+    stack->top = (stack->top)+1;
     stack->number[stack->top] = num;
+    printf("The number pushed into stack is: %d ",stack->number[stack->top]);
   }
 }Catch(ex){
   dumpException(ex);
@@ -44,7 +52,7 @@ void push(int num, num_stack *stack){  //function used to push element to stack
 
 int pop(num_stack *stack){
   int num;
-  if(stack-> top == -1){
+  if(stack_is_empty(stack)){
     printf("Error! Stack is empty");
   }
   else{
