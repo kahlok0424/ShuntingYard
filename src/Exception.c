@@ -14,5 +14,5 @@ void freeException(Exception *e){
 }
 
 void dumpException(Exception *e){
-    printf("%s (err=%d)\n" , e-> msg , e-> errorCode);
+    printf("%s (error code =%d)\n" , e-> msg , e-> errorCode);
 }
