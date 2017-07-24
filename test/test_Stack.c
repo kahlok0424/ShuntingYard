@@ -41,3 +41,15 @@ void test_Stack_push_7_to_stack_expect_pop_7(void)
 
    TEST_ASSERT_EQUAL(7,num);
 }
+
+void test_push_stack_19_and_pop_19(void)
+{
+  num_stack stack;
+//  int *num = 19;
+  int result,result1;
+  stack_push(&stack,19 );
+  result = stack_pop(&stack);
+  result1 = stack_pop(&stack);
+  printf("result : %d",result);
+  TEST_ASSERT_EQUAL(19,result);
+}

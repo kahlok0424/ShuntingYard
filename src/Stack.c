@@ -1,6 +1,7 @@
 #include "Stack.h"
 #include <stdio.h>
 #include "CException.h"
+#include <stdlib.h>
 
 #define stackfulled 1
 #define stackempty 2
@@ -67,4 +68,32 @@ int pop(num_stack *stack){
   dumpException(ex);
 }
   return num;
+}
+
+struct Stack {
+    const void *data;
+    Stack *next;
+};
+
+
+void stack_push(Stack **stack, const void *data) {
+    Stack *item = malloc(sizeof *item);
+    item->data = data;
+    item->next = *stack;
+    *stack = item;
+}
+
+const void *stack_pop(Stack **stack) {
+    Stack *item = *stack;
+    if(!stack_is_empty(stack)){
+    const void *data = item->data;
+    *stack = item->next;
+    free(item);
+    return data;
+  }
+    return 0;
+}
+
+const void *stack_top(const Stack *stack) {
+    return stack->data;
 }
