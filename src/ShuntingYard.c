@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "ShuntingYard.h"
 #include "Stack.h"
 
@@ -63,3 +65,26 @@ void push_number(const char *value, Stack **operands) {
     push_double(x, operands);
     return OK;
 }*/
+
+void testing(int a ,int b,char x)
+{
+  Stack *number_stack = malloc(sizeof *number_stack);
+  Stack *operator_stack = malloc(sizeof *operator_stack);
+
+  if(a == 22 || b == 44)
+  {
+    push(number_stack , a);
+    push(number_stack , b);
+  }
+  else if(x == "+")
+  {
+    push(operator_stack , x);
+  }
+
+
+
+
+
+}
+
+void function()
