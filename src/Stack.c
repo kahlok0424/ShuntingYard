@@ -3,6 +3,9 @@
 #include "CException.h"
 #include <stdlib.h>
 
+#define stackempty 0
+#define stackfulled 1
+
 struct Stack {
     const void *data;
     Stack *next;

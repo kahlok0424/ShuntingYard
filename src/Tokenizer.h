@@ -9,4 +9,6 @@ INLINE Token *getToken(Tokenizer *tokenizer);
 INLINE Token *peepToken(Tokenizer *tokenizer);
 Tokenizer *initTokenizer(char *stringToTokenize);
 
+Token tokenize(const char *expresson);
+
 #endif // Tokenizer_H

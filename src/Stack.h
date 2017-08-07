@@ -2,12 +2,6 @@
 #define _STACK_H
 #define MAXSTACK 12
 
-typedef struct num_stack num_stack;
-struct num_stack{
-    int number[MAXSTACK];
-    int top;
-};
-
 typedef struct Stack Stack;
 
 // Inserts an item at the top of the stack.

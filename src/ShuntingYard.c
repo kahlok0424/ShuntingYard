@@ -2,6 +2,28 @@
 #include <stdlib.h>
 #include "ShuntingYard.h"
 #include "Stack.h"
+#include "Tokenizer.h"
+#include "Token.h"
+
+void shuntingYard(char *expression)
+{
+  Stack *operand = NULL ,*operator = NULL;
+  Tokenizer *tokenizer = initTokenizer(expression);
+  Token *token = getToken(tokenizer);
+  IntegerToken *inttoken;
+
+  if(token->type == TOKEN_INTEGER_TYPE)
+  {
+    inttoken = (IntegerToken *)token;
+    push(&operand, inttoken->value);
+  }
+  else if(token->type == TOKEN_OPERATOR_TYPE)
+  {
+    push(&operator,(int *)token->str);
+  }
+  //return token;
+}
+
 
 /*typedef enum {
     OPERATOR_OTHER,
@@ -65,26 +87,3 @@ void push_number(const char *value, Stack **operands) {
     push_double(x, operands);
     return OK;
 }*/
-
-void testing(int a ,int b,char x)
-{
-  Stack *number_stack = malloc(sizeof *number_stack);
-  Stack *operator_stack = malloc(sizeof *operator_stack);
-
-  if(a == 22 || b == 44)
-  {
-    push(number_stack , a);
-    push(number_stack , b);
-  }
-  else if(x == "+")
-  {
-    push(operator_stack , x);
-  }
-
-
-
-
-
-}
-
-void function()
