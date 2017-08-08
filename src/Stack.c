@@ -1,6 +1,7 @@
 #include "Stack.h"
 #include <stdio.h>
-#include "CException.h"
+#include "CExceptionConfig.h"
+#include "Exception.h"
 #include <stdlib.h>
 
 #define stackempty 0
@@ -23,7 +24,7 @@ const void *pop(Stack **stack) {
     if(item == NULL)
     {
       printf("Stack is empty");
-      Throw(createException("The stack is empty!",  \
+  //    Throw(createException("The stack is empty!",  \
                             stackempty));
     }
     else{
@@ -37,4 +38,19 @@ const void *pop(Stack **stack) {
 
 const void *stack_top(const Stack *stack) {
     return stack->data;
+}
+
+//This is because the second parameter for func push is const void so \
+   i created another func to push integer using pointer
+void push_double(Stack **operands , double x) {
+    double *pointer = malloc(sizeof *pointer);
+    *pointer = x;
+    push(operands, pointer);
+}
+
+double pop_double(Stack **operands) {
+    const double *pointer = pop(operands);
+    double x = *pointer;
+    free((void *)pointer);
+    return x;
 }

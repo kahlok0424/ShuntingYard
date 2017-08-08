@@ -1,6 +1,6 @@
 #include "Tokenizer.h"
 
-Token tokenize(const char *expresson)
+/*Token tokenize(const char *expresson)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
   Token *tokens = malloc(sizeof *tokens);
@@ -11,4 +11,4 @@ Token tokenize(const char *expresson)
     tokens = getToken(tokenizer);
   }
   return tokens;
-}
+}*/

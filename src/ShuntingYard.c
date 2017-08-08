@@ -1,27 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ShuntingYard.h"
+#include "Token.h"
 #include "Stack.h"
 #include "Tokenizer.h"
 #include "Token.h"
 
-void shuntingYard(char *expression)
+void shuntingYard(char *expression, double *result)
 {
   Stack *operand = NULL ,*operator = NULL;
   Tokenizer *tokenizer = initTokenizer(expression);
   Token *token = getToken(tokenizer);
   IntegerToken *inttoken;
+  OperatorToken *optoken;
 
   if(token->type == TOKEN_INTEGER_TYPE)
   {
     inttoken = (IntegerToken *)token;
-    push(&operand, inttoken->value);
+    push_double(&operand,inttoken->value);
+    printf("Enter here %d \n" , inttoken->value);
   }
   else if(token->type == TOKEN_OPERATOR_TYPE)
   {
-    push(&operator,(int *)token->str);
+    optoken = (OperatorToken *)token;
+    push(&operator,(int *)optoken->str);
   }
-  //return token;
+  *result = pop_double(&operand);
+  printf("Value of result : %d" , *result);
+
 }
 
 
