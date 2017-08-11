@@ -11,9 +11,8 @@ void shuntingYard(char *expression, double *result)
   Stack *operand = NULL ,*operator = NULL;
   Tokenizer *tokenizer = initTokenizer(expression);
   Token *token = getToken(tokenizer);
-  IntegerToken *inttoken;
+  IntegerToken *inttoken,*test;
   OperatorToken *optoken;
-  Token *test;
   double test2;
 
   if(token->type == TOKEN_INTEGER_TYPE)
@@ -28,9 +27,8 @@ void shuntingYard(char *expression, double *result)
     push(&operator,(const void *)optoken);
   }
   test = pop(&operand);
-//  test2 = test->value;
-  printf("Value of result : %d\n" , *test);
-  printf("Address of token : %d", test->str);
+  *result = test->value;
+  printf("Value of token : %d", test->value);
 
 }
 
@@ -53,7 +51,7 @@ typedef struct {
     OperatorArity arity;
     OperatorAssociativity associativity;
 } Operator;
-    
+
 static const Operator OPERATORS[] = {
 //  {'!', 1, OPERATOR_UNARY,  OPERATOR_LEFT},
 //    {'^', 2, OPERATOR_BINARY, OPERATOR_RIGHT},

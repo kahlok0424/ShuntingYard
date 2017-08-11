@@ -67,9 +67,19 @@ void test_ShuntingYard_get_integer_token(void)
   TEST_ASSERT_EQUAL(44 , result);
 }
 
-void xtest_ShuntingYard_push_token_into_Stack(void)
+void test_ShuntingYard_get_operator_token(void)
 {
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" , 44};
+  Token *token;
+  char *expression = "* ";
 
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&opToken2);
+
+  double *result;
+  shuntingYard(expression , &result);
+  TEST_ASSERT_EQUAL("*" , result);
 
 }
 
