@@ -11,9 +11,8 @@ void shuntingYard(char *expression, double *result)
   Stack *operand = NULL ,*operator = NULL;
   Tokenizer *tokenizer = initTokenizer(expression);
   Token *token = getToken(tokenizer);
-  IntegerToken *inttoken,*test;
+  IntegerToken *inttoken;
   OperatorToken *optoken;
-  double test2;
 
   if(token->type == TOKEN_INTEGER_TYPE)
   {
@@ -26,13 +25,18 @@ void shuntingYard(char *expression, double *result)
     optoken = (OperatorToken *)token;
     push(&operator,(const void *)optoken);
   }
-  test = pop(&operand);
-  *result = test->value;
+    return result = 44;
+//  *result = test->value;
   printf("Value of token : %d", test->value);
-
 }
 
+double computeExpression(char *expression , Stack *operand , Stack *operator)
+{
 
+
+
+
+}
 /*typedef enum {
     OPERATOR_OTHER,
     OPERATOR_UNARY,

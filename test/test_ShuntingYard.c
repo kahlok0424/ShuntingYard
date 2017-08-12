@@ -15,7 +15,7 @@ void tearDown(void)
 void test_get_integerToken(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44",44};
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44", 44};
   Token *token;
 
   getToken_ExpectAndReturn(tokenizer , (Token *)&inttoken);
@@ -27,7 +27,7 @@ void test_get_integerToken(void)
 void test_get_integer_and_put_in_intToken(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44",44};
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44", 44};
   Token *token;
   IntegerToken *intToken1;
 
@@ -64,13 +64,13 @@ void test_ShuntingYard_get_integer_token(void)
 
   double *result;
   shuntingYard(expression , &result);
-  TEST_ASSERT_EQUAL(44 , result);
+  TEST_ASSERT_EQUAL(44 , *result);
 }
 
 void test_ShuntingYard_get_operator_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" , 44};
+  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
   Token *token;
   char *expression = "* ";
 
@@ -80,7 +80,6 @@ void test_ShuntingYard_get_operator_token(void)
   double *result;
   shuntingYard(expression , &result);
   TEST_ASSERT_EQUAL("*" , result);
-
 }
 
 /*void xtest_ShuntingYard_get_integer_token(void)

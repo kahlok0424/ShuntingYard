@@ -21,13 +21,13 @@ void test_push_stack_19_and_pop_19(void)
 {
   Stack *stack;
 //  int *num = 19;
-  int result,result1;
+  int *result,result1;
   push(&stack,(void *)19 );
   push(&stack,(void *)25 );
-//  result = pop(&stack);
+//*result = pop(&stack);
 //  result1 = pop(&stack);
-  printf("result : %d",result);
-  TEST_ASSERT_EQUAL(25,result);
+//  printf("result : %d",result);
+  TEST_ASSERT_EQUAL(25,*result);
   TEST_ASSERT_EQUAL(19,result1);
 }
 
@@ -40,7 +40,7 @@ void test_push_double_stack_19_and_pop_double_19(void)
   push_double(&stack,255 );
   result = pop_double(&stack);
   result1 = pop_double(&stack);
-  printf("result : %d",result);
+  printf("result1 : %d",result);
   TEST_ASSERT_EQUAL(255,result);
   TEST_ASSERT_EQUAL(199,result1);
 }
