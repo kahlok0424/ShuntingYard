@@ -16,19 +16,36 @@ void tearDown(void)
 {
 }
 
-
 void test_push_stack_19_and_pop_19(void)
 {
   Stack *stack;
-//  int *num = 19;
-  int *result,result1;
   push(&stack,(void *)19 );
   push(&stack,(void *)25 );
-//*result = pop(&stack);
-//  result1 = pop(&stack);
-//  printf("result : %d",result);
-  TEST_ASSERT_EQUAL(25,*result);
-  TEST_ASSERT_EQUAL(19,result1);
+  TEST_ASSERT_EQUAL(25,pop(&stack));
+  TEST_ASSERT_EQUAL(19, pop(&stack));
+}
+
+void test_push_add_and_pop_add(void)
+{
+  Stack *operator;
+  push(&operator ,"+");
+  TEST_ASSERT_EQUAL_STRING("+",pop(&operator));
+}
+
+void test_push_Token_into_stack(void)
+{
+  Stack *stack;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "777", 44};
+  push(&stack,&inttoken);
+  TEST_ASSERT_EQUAL(&inttoken,pop(&stack));
+}
+
+void test_push_Token_into_stack_op(void)
+{
+  Stack *stack;
+  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "+", };
+  push(&stack,&optoken);
+  TEST_ASSERT_EQUAL(&optoken,pop(&stack));
 }
 
 void test_push_double_stack_19_and_pop_double_19(void)

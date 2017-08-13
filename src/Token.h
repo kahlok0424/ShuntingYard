@@ -11,6 +11,7 @@ typedef enum {
   TOKEN_FLOAT_TYPE,
   TOKEN_STRING_TYPE,
   TOKEN_IDENTIFIER_TYPE,
+  TOKEN_NULL_TYPE,
 } TokenType;
 
 typedef enum {
@@ -69,4 +70,3 @@ typedef struct {
 } Tokenizer;
 
 #endif // Token_H
-

@@ -3,6 +3,7 @@
 #include "Token.h"
 #include "mock_Tokenizer.h"
 #include "Stack.h"
+#include "Exception.h"
 
 void setUp(void)
 {
@@ -55,32 +56,94 @@ void test_get_operator_and_put_in_opToken(void)
 void test_ShuntingYard_get_integer_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "44" , 44};
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44" , 44};
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,11 ,4 , "44" , 44};
   Token *token;
   char *expression = " 44 ";
+  double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&intToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&intToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken);
+  peepToken_ExpectAndReturn(tokenizer,(Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
 
-  double *result;
-  shuntingYard(expression , &result);
+  CEXCEPTION_T ex;
+  Try{
+    shuntingYard(expression , result);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL(44 , *result);
 }
 
 void test_ShuntingYard_get_operator_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
+  OperatorToken nullToken = {TOKEN_NULL_TYPE ,11 ,4 , "*" };
   Token *token;
   char *expression = "* ";
+  double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&opToken2);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&opToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&opToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&opToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer ,(Token *)&nullToken);
 
-  double *result;
-  shuntingYard(expression , &result);
+  CEXCEPTION_T ex;
+  Try{
+    shuntingYard(expression , result);
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL("*" , result);
 }
+
+void test_ShuntingYard_same_token_expect_Exception(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
+  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
+  OperatorToken opToken3 = {TOKEN_NULL_TYPE , 11,4,""};
+  Token *token;
+  char *expression = "**";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&opToken1);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&opToken1);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&opToken1);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&opToken2);
+  //getToken_ExpectAndReturn(tokenizer , (Token *)&opToken3);
+
+  CEXCEPTION_T ex;
+  Try{
+    shuntingYard(expression , result);
+  }Catch(ex){
+    dumpException(ex);
+  }
+}
+
+void test_computeExpression_4_add_4_expect_8(void)
+{
+  Stack *operand;
+  Stack *operator;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "4", 4};
+  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "4", 4};
+  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "+", };
+  
+  push(&operand,&inttoken);
+  push(&operand, &inttoken2);
+  push(&operator, &optoken);
+  double result = computeExpression(&operand ,&operator);
+  TEST_ASSERT_EQUAL(8,result);
+
+}
+
 
 /*void xtest_ShuntingYard_get_integer_token(void)
 {

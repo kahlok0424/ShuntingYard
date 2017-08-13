@@ -6,4 +6,6 @@
 
 void shuntingYard(char *expression, double *result);
 
+double computeExpression(Stack *operand , Stack *operators);
+
 #endif // _SHUNTINGYARD_H
