@@ -7,7 +7,8 @@
 #include "Token.h"
 #include "CException.h"
 
-#define sameToken 1
+#define SAMETOKEN 1
+#define NULLTOKEN 2
 
 typedef enum {
     OPERATOR_OTHER,
@@ -41,11 +42,11 @@ static const Operator OPERATORS[] = {
 //    {'(', 6, OPERATOR_OTHER,  OPERATOR_NONE}
 };
 
-void shuntingYard(char *expression, double *result)
+Token* shuntingYard(char *expression, double *result)
 {
   Stack *operand = NULL ,*operator = NULL;
   Tokenizer *tokenizer = initTokenizer(expression);
-  IntegerToken *inttoken;
+  IntegerToken *inttoken, *testToken;
   OperatorToken *optoken;
   Token *currentToken = peepToken(tokenizer);
   Token *token ;
@@ -72,33 +73,62 @@ void shuntingYard(char *expression, double *result)
     else
     {
       Throw(createException("Invalid Token ,token is the same type of previous!" \
-                           , sameToken));
+                           , SAMETOKEN));
     }
   }
-  //return result = 44;
-//  *result = test->value;
-  //printf("Value of token : %d", test->value);
+
+  int testresult = computeExpression(&operand,&operator);
+  result = &testresult;
+  printf("result :%d \n",*result);
+  testToken =(IntegerToken *)pop(&operand);
+  printf("Test Token value = %d\n",testToken->value);
+  return testToken;
+
+  if(currentToken->type == TOKEN_NULL_TYPE){
+    Throw(createException("NULL Token detected! End of expression." \
+                       , NULLTOKEN)); }
 }
 
 double computeExpression(Stack *operand , Stack *operators)
 {
-  IntegerToken *number, *number2;
+  IntegerToken *number, *number2, *result;
   OperatorToken *op;
-//  number =pop(&operand);
-//  number2 = pop(&operand);
-//  op = pop(&operators);
+  number =(IntegerToken *)pop(operand);
+  number2 =(IntegerToken *)pop(operand);
+  op =(OperatorToken *)pop(operators);
 
-  int x = number->value;
-  int y = number2->value;
-  char operator = op->str;
+  int y = number->value;
+  int x = number2->value;
+  char z= *(op->str);
+  //char *operator = &z;
 
-  switch(operator){
+  printf("X = %d\n",x);
+  printf("y = %d\n",y);
+  printf("op = %c\n",z);
+
+  switch(z){
   case '+':
   x= x + y;
   break;
+
+  case '-':
+  x = x - y;
+  break;
+
+  case '*':
+  x = x * y;
+  break;
+
+  case '/':
+  x = x/y;
+  break;
+
   default:
   return 0;
   }
+  IntegerToken backResult = {TOKEN_INTEGER_TYPE,0,0,"x", 88 };
+  push(operand , &backResult);
+  printf("Back result address : %d\n",backResult);
   return x;
 }
 

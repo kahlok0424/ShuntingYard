@@ -4,7 +4,7 @@
 #include "Tokenizer.h"
 #include "Stack.h"
 
-void shuntingYard(char *expression, double *result);
+Token* shuntingYard(char *expression, double *result);
 
 double computeExpression(Stack *operand , Stack *operators);
 
