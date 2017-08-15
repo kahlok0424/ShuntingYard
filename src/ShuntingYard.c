@@ -10,23 +10,11 @@
 #define SAMETOKEN 1
 #define NULLTOKEN 2
 
-typedef enum {
-    OPERATOR_OTHER,
-    OPERATOR_UNARY,
-    OPERATOR_BINARY
-} OperatorArity;
-
-typedef enum {
-    OPERATOR_NONE,
-    OPERATOR_LEFT,
-    OPERATOR_RIGHT
-} OperatorAssociativity;
-
 typedef struct {
     char symbol;
     int precedence;
-    OperatorArity arity;
-    OperatorAssociativity associativity;
+    Affix affix;
+    Associativity assoc;
 } Operator;
 
 static const Operator OPERATORS[] = {
@@ -34,10 +22,10 @@ static const Operator OPERATORS[] = {
 //    {'^', 2, OPERATOR_BINARY, OPERATOR_RIGHT},
 //    {'+', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
 //    {'-', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
-    {'*', 4, OPERATOR_BINARY, OPERATOR_LEFT},
-    {'/', 4, OPERATOR_BINARY, OPERATOR_LEFT},
-    {'%', 4, OPERATOR_BINARY, OPERATOR_LEFT},
-    {'+', 5, OPERATOR_BINARY, OPERATOR_LEFT},
+    {'*', 4, INFIX, LEFT_TO_RIGHT},
+    {'/', 4, INFIX, LEFT_TO_RIGHT},
+    {'%', 4, INFIX, LEFT_TO_RIGHT},
+    {'+', 5, INFIX, LEFT_TO_RIGHT},
 //    {'-', 5, OPERATOR_BINARY, OPERATOR_LEFT},
 //    {'(', 6, OPERATOR_OTHER,  OPERATOR_NONE}
 };
