@@ -4,6 +4,7 @@
 #include "Tokenizer.h"
 #include "Stack.h"
 
+Token *createNumberToken(int number);
 Token* shuntingYard(char *expression, double *result);
 
 double computeExpression(Stack *operand , Stack *operators);

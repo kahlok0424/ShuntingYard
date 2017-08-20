@@ -16,7 +16,7 @@ void tearDown(void)
 void test_get_integerToken(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44", 44};
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE , "44", 44};
   Token *token;
 
   getToken_ExpectAndReturn(tokenizer , (Token *)&inttoken);
@@ -28,7 +28,7 @@ void test_get_integerToken(void)
 void test_get_integer_and_put_in_intToken(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44", 44};
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE , "44", 44};
   Token *token;
   IntegerToken *intToken1;
 
@@ -42,7 +42,7 @@ void test_get_integer_and_put_in_intToken(void)
 void test_get_operator_and_put_in_opToken(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "+", };
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "+", };
   Token *token;
   OperatorToken *opToken1;
 
@@ -56,8 +56,8 @@ void test_get_operator_and_put_in_opToken(void)
 void test_ShuntingYard_get_integer_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44" , 44};
-  IntegerToken nullToken = {TOKEN_NULL_TYPE ,11 ,4 , "44" , 44};
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE , "44" , 44};
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"44" , 44};
   Token *token;
   char *expression = " 44 ";
   double *result;
@@ -81,8 +81,8 @@ void test_ShuntingYard_get_integer_token(void)
 void test_ShuntingYard_get_operator_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
-  OperatorToken nullToken = {TOKEN_NULL_TYPE ,11 ,4 , "*" };
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE, "*" };
+  OperatorToken nullToken = {TOKEN_NULL_TYPE, "*" };
   Token *token;
   char *expression = "* ";
   double *result;
@@ -107,9 +107,9 @@ void test_ShuntingYard_get_operator_token(void)
 void test_ShuntingYard_same_token_expect_Exception(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
-  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
-  OperatorToken opToken3 = {TOKEN_NULL_TYPE , 11,4,""};
+  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE, "*" };
+  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE, "*" };
+  OperatorToken opToken3 = {TOKEN_NULL_TYPE,""};
   Token *token;
   char *expression = "**";
   double *result;
@@ -133,9 +133,9 @@ void test_ShuntingYard_same_token_expect_Exception(void)
 void test_ShuntingYard_NULL_token_expect_Exception(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
-  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE ,11 ,4 , "*" };
-  IntegerToken nullToken = {TOKEN_NULL_TYPE , 11,4,"bla",0};
+  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE, "*" };
+  OperatorToken opToken2 = {TOKEN_OPERATOR_TYPE , "*" };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   Token *token;
   char *expression = "**";
   double *result;
@@ -155,67 +155,11 @@ void test_ShuntingYard_NULL_token_expect_Exception(void)
   }
 }
 
-void test_computeExpression_4_add_4_expect_8(void)
-{
-  Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "4", 4};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "4", 4};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , 0,0 , "+", };
-
-  push(&operand,&inttoken);
-  push(&operand, &inttoken2);
-  push(&operator, &optoken);
-
-  TEST_ASSERT_EQUAL(8,computeExpression(&operand ,&operator));
-}
-
-void test_computeExpression_10_minus_4_expect_6(void)
-{
-  Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "10", 10};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "5", 5};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , 0,0 , "-", };
-
-  push(&operand,&inttoken);
-  push(&operand, &inttoken2);
-  push(&operator, &optoken);
-
-  TEST_ASSERT_EQUAL(5,computeExpression(&operand ,&operator));
-}
-
-void test_computeExpression_3_multiply_3_expect_9(void)
-{
-  Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "3", 3};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "3", 3};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , 0,0 , "*", };
-
-  push(&operand,&inttoken);
-  push(&operand, &inttoken2);
-  push(&operator, &optoken);
-
-  TEST_ASSERT_EQUAL(9,computeExpression(&operand ,&operator));
-}
-
-void test_computeExpression_100_divide_5_expect_20(void)
-{
-  Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "100", 100};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "5", 5};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , 0,0 , "/", };
-
-  push(&operand,&inttoken);
-  push(&operand, &inttoken2);
-  push(&operator, &optoken);
-
-  TEST_ASSERT_EQUAL(20,computeExpression(&operand ,&operator));
-}
-
 /*void xtest_ShuntingYard_get_integer_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "+", };
-  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,11 ,4 , "44",44};
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "+", };
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"44",44};
   Token *token;
   IntegerToken *intToken1;
   OperatorToken *opToken1;
@@ -233,9 +177,9 @@ void test_computeExpression_100_divide_5_expect_20(void)
  void xtest_ShuntingYard(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "22",22};
-  IntegerToken inttoken1 = {TOKEN_INTEGER_TYPE ,15 ,4 , "44",44};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,13 , 2 , "+" , };
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,"22",22};
+  IntegerToken inttoken1 = {TOKEN_INTEGER_TYPE ,"44",44};
+  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,"+" , };
 
   initTokenizer_ExpectAndReturn("22+44",tokenizer);
   getToken_ExpectAndReturn(tokenizer , (Token *)&inttoken);

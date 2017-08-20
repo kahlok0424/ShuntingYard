@@ -16,9 +16,9 @@ void tearDown(void)
 void test_ShuntingYard_simple_expression_add(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,0 ,0 , "+", };
-  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,11 ,4 , "5",5 };
-  IntegerToken nullToken = {TOKEN_NULL_TYPE , 11,4,"bla",0};
+  OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,"+", };
+  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",5 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   Token *token;
   IntegerToken *testToken;
   char *expression = "5+5";

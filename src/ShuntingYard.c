@@ -6,6 +6,7 @@
 #include "Tokenizer.h"
 #include "Token.h"
 #include "CException.h"
+#include "computeExpression.h"
 
 #define SAMETOKEN 1
 #define NULLTOKEN 2
@@ -34,10 +35,10 @@ Token* shuntingYard(char *expression, double *result)
 {
   Stack *operand = NULL ,*operator = NULL;
   Tokenizer *tokenizer = initTokenizer(expression);
-  IntegerToken *inttoken, *testToken;
+  IntegerToken *intToken, *testToken;
   OperatorToken *optoken;
   Token *currentToken = peepToken(tokenizer);
-  Token *token ;
+  Token *token;
 
   while(currentToken->type != TOKEN_NULL_TYPE)
   {
@@ -47,9 +48,9 @@ Token* shuntingYard(char *expression, double *result)
       token = getToken(tokenizer);
       if(token->type == TOKEN_INTEGER_TYPE)
       {
-        inttoken = (IntegerToken *)token;
-        push(&operand,(const void *)inttoken);
-        printf("Integer Token Value = %d \n" , inttoken->value);
+        intToken = (IntegerToken *)token;
+        push(&operand,(const void *)intToken);
+        printf("Integer Token Value = %d \n" , intToken->value);
       }
       else if(token->type == TOKEN_OPERATOR_TYPE)
       {
@@ -65,7 +66,7 @@ Token* shuntingYard(char *expression, double *result)
     }
   }
 
-  int testresult = computeExpression(&operand,&operator);
+  computeExpression(&operand,);
   result = &testresult;
   printf("result :%d \n",*result);
   testToken =(IntegerToken *)pop(&operand);
@@ -75,49 +76,6 @@ Token* shuntingYard(char *expression, double *result)
   if(currentToken->type == TOKEN_NULL_TYPE){
     Throw(createException("NULL Token detected! End of expression." \
                        , NULLTOKEN)); }
-}
-
-double computeExpression(Stack *operand , Stack *operators)
-{
-  IntegerToken *number, *number2, *result;
-  OperatorToken *op;
-  number =(IntegerToken *)pop(operand);
-  number2 =(IntegerToken *)pop(operand);
-  op =(OperatorToken *)pop(operators);
-
-  int y = number->value;
-  int x = number2->value;
-  char z= *(op->str);
-  //char *operator = &z;
-
-  printf("X = %d\n",x);
-  printf("y = %d\n",y);
-  printf("op = %c\n",z);
-
-  switch(z){
-  case '+':
-  x= x + y;
-  break;
-
-  case '-':
-  x = x - y;
-  break;
-
-  case '*':
-  x = x * y;
-  break;
-
-  case '/':
-  x = x/y;
-  break;
-
-  default:
-  return 0;
-  }
-  IntegerToken backResult = {TOKEN_INTEGER_TYPE,0,0,"x", 88 };
-  push(operand , &backResult);
-  printf("Back result address : %d\n",backResult);
-  return x;
 }
 
 /*void push_operator(const Operator *operator, Stack **operands,

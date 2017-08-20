@@ -36,15 +36,15 @@ typedef struct {
 
 typedef struct {
   TokenType type;
-  uint32_t startColumn;
-  uint32_t length;
+  //uint32_t startColumn;   //commend out because it's not used in this project
+  //uint32_t length;      //to avoid problem caused by this
   char *str;
   int value;
 } IntegerToken;
 
 typedef struct {
   TokenType type;
-  uint32_t startColumn;
+  //uint32_t startColumn; \
   uint32_t length;
   char *str;
   double value;
@@ -52,14 +52,14 @@ typedef struct {
 
 typedef struct {
   TokenType type;
-  uint32_t startColumn;
+  //uint32_t startColumn;  \
   uint32_t length;
   char *str;
 } IdentifierToken, StringToken, CharConstToken;
 
 typedef struct {
   TokenType type;
-  uint32_t startColumn;
+//uint32_t startColumn;\
   uint32_t length;
   char *str;
   Token *token[0];
