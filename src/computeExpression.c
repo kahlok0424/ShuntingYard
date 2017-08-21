@@ -22,10 +22,11 @@ void computeExpression(Stack *operand , OperatorToken *operator)
   number =(IntegerToken *)pop(operand);
   number2 =(IntegerToken *)pop(operand);
 
-  answer = calculate(operator,&number,&number2);
-  Token *newResult = createNumberToken(answer);
+  answer = calculate(operator,number,number2);
+  IntegerToken *newResult = createNumberToken(answer);
+	printf("newResult : %d\n",newResult->value);
   push(operand , &newResult);
-  printf("Back result address : %d\n",newResult);
+  printf("Answer : %d\n",answer);
 }
 
 int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number2)

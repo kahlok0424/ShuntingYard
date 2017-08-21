@@ -14,10 +14,10 @@ void tearDown(void)
 
 void test_computeExpression_createNumberToken(void)
 {
-  Token *token;
+  IntegerToken *token;
   token = createNumberToken(10);
 
-  TEST_ASSERT_EQUAL(10,*(token->str));
+  TEST_ASSERT_EQUAL(10,token->value);
 }
 
 void test_computeExpression_calculate_100_add_58(void)
@@ -88,7 +88,7 @@ void test_computeExpression_10_minus_4_expect_6(void)
   TEST_ASSERT_EQUAL(5,computeExpression(&operand ,&operator));
 }*/
 
-/*void test_computeExpression_3_multiply_3_expect_9(void)
+void test_computeExpression_3_multiply_3_expect_9(void)
 {
   Stack *operand, *operator;
   IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"3", 3};
@@ -101,8 +101,8 @@ void test_computeExpression_10_minus_4_expect_6(void)
   computeExpression(&operand ,&opToken);
   IntegerToken *result =(IntegerToken *)pop(&operand);
 
-  TEST_ASSERT_EQUAL(9, (result->value) );
-}*/
+  TEST_ASSERT_EQUAL(9, result->value );
+}
 
 /*void test_computeExpression_100_divide_5_expect_20(void)
 {

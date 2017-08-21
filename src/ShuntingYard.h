@@ -7,6 +7,6 @@
 Token *createNumberToken(int number);
 Token* shuntingYard(char *expression, double *result);
 
-double computeExpression(Stack *operand , Stack *operators);
+//double computeExpression(Stack *operand , Stack *operators);
 
 #endif // _SHUNTINGYARD_H
