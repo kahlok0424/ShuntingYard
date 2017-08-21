@@ -5,7 +5,7 @@
 #include "Stack.h"
 
 Token *createNumberToken(int number);
-void computeExpression(Stack *operand , OperatorToken *operators);
+void computeExpression(Stack **operand , OperatorToken *operators);
 int calculate(OperatorToken *operator ,IntegerToken *firstNumber,IntegerToken *secondNumber);
 
 #endif // _COMPUTEEXPRESSION_H

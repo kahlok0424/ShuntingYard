@@ -6,17 +6,17 @@
 typedef struct Stack Stack;
 
 // Inserts an item at the top of the stack.
-void push(Stack **stack, const void *value);
+void push(Stack *stack, const void *value);
 
 // Removes an item from the top of the stack.
-const void *pop(Stack **stack);
+const void *pop(Stack *stack);
 
 // Returns the item at the top of the stack without removing it.
 const void *stack_top(const Stack *stack);
 
 //Push double onto the stack
-void push_double(Stack **operands , double x);
+//void push_double(Stack **operands , double x);
 
-double pop_double(Stack **operands);
+//double pop_double(Stack **operands);
 
 #endif // _STACK_H

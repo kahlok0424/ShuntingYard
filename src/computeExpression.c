@@ -14,7 +14,7 @@ Token *createNumberToken(int number)
 	return (Token*)newToken;
 }
 
-void computeExpression(Stack *operand , OperatorToken *operator)
+void computeExpression(Stack **operand , OperatorToken *operator)
 {
   int answer;
   IntegerToken *number, *number2;
@@ -23,8 +23,8 @@ void computeExpression(Stack *operand , OperatorToken *operator)
   number2 =(IntegerToken *)pop(operand);
 
   answer = calculate(operator,number,number2);
-  IntegerToken *newResult = createNumberToken(answer);
-	printf("newResult : %d\n",newResult->value);
+  Token *newResult = createNumberToken(answer);
+	//printf("newResult : %d\n",newResult->value);
   push(operand , &newResult);
   printf("Answer : %d\n",answer);
 }

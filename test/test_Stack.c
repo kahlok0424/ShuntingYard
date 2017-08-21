@@ -4,7 +4,7 @@
 #include "Exception.h"
 #include "Token.h"
 #include "mock_Tokenizer.h"
-#include "ShuntingYard.h"
+//#include "ShuntingYard.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -18,37 +18,37 @@ void tearDown(void)
 
 void test_push_stack_19_and_pop_19(void)
 {
-  Stack *stack;
-  push(&stack,(void *)19 );
-  push(&stack,(void *)25 );
-  TEST_ASSERT_EQUAL(25,pop(&stack));
-  TEST_ASSERT_EQUAL(19, pop(&stack));
+  Stack *stack1 = NULL;
+  push(stack1,(void *)19 );
+  push(stack1,(void *)25 );
+  TEST_ASSERT_EQUAL(25,pop(stack1));
+  TEST_ASSERT_EQUAL(19, pop(stack1));
 }
 
 void test_push_add_and_pop_add(void)
 {
-  Stack *operator;
-  push(&operator ,"+");
-  TEST_ASSERT_EQUAL_STRING("+",pop(&operator));
+  Stack *operator = NULL;
+  push(operator ,"+");
+  TEST_ASSERT_EQUAL_STRING("+",pop(operator));
 }
 
 void test_push_Token_into_stack(void)
 {
-  Stack *stack;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "777", 44};
-  push(&stack,&inttoken);
-  TEST_ASSERT_EQUAL(&inttoken,pop(&stack));
+  Stack *stack = NULL;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE , "777", 44};
+  push(stack,&inttoken);
+  TEST_ASSERT_EQUAL(&inttoken,pop(stack));
 }
 
 void test_push_Token_into_stack_op(void)
 {
-  Stack *stack;
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,11 ,4 , "+", };
-  push(&stack,&optoken);
-  TEST_ASSERT_EQUAL(&optoken,pop(&stack));
+  Stack *stack= NULL;
+  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,"+", };
+  push(stack,&optoken);
+  TEST_ASSERT_EQUAL(&optoken,pop(stack));
 }
 
-void test_push_double_stack_19_and_pop_double_19(void)
+/*void test_push_double_stack_19_and_pop_double_19(void)
 {
   Stack *stack;
 //  int *num = 19;
@@ -77,7 +77,7 @@ void test_push_integerToken_into_stack(void)
   push_double(&stack,testToken->value);
   result = pop_double(&stack);
   TEST_ASSERT_EQUAL(7,result);
-}
+}*/
 
 void xtest_randomtest(void)
 {
