@@ -14,17 +14,23 @@ struct Stack {
 };
 
 void push(Stack *stack, const void *data) {
+    printf("before Stack: %d\n",stack);
     Stack *item = malloc(sizeof *item);
     item->data = data;
     item->next = stack;
     stack = item;
+    printf("Stack: %d\n",stack);
+    printf("&Stack: %d\n",&stack);
+    printf("item:  %d\n",item);
+    printf("&item:  %d\n",&item);
+
 }
 
 const void *pop(Stack *stack)
 {
+    printf("%d\n",stack);
     Stack *item = malloc(sizeof *item);
     item = stack;
-    printf("%d\n",item);
     if(item == NULL)
     {
       printf("Stack is empty");

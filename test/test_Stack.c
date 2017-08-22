@@ -18,14 +18,17 @@ void tearDown(void)
 
 void test_push_stack_19_and_pop_19(void)
 {
-  Stack *stack1 = NULL;
+  Stack *stack1=NULL; // = malloc(sizeof *Stack);
+  printf("stack1: %d\n",stack1);
+  printf("%d\n",&stack1);
   push(stack1,(void *)19 );
   push(stack1,(void *)25 );
+  printf("%d\n",stack1);
   TEST_ASSERT_EQUAL(25,pop(stack1));
   TEST_ASSERT_EQUAL(19, pop(stack1));
 }
 
-void test_push_add_and_pop_add(void)
+/*void test_push_add_and_pop_add(void)
 {
   Stack *operator = NULL;
   push(operator ,"+");
@@ -46,7 +49,7 @@ void test_push_Token_into_stack_op(void)
   OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,"+", };
   push(stack,&optoken);
   TEST_ASSERT_EQUAL(&optoken,pop(stack));
-}
+}*/
 
 /*void test_push_double_stack_19_and_pop_double_19(void)
 {
