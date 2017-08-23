@@ -62,7 +62,7 @@ void test_computeExpression_calculate_80_divide_2(void)
   TEST_ASSERT_EQUAL(40,calculate(&opToken,&intToken2,&intToken));
 }
 
-/*void test_computeExpression_4_add_4_expect_8(void)
+void test_computeExpression_4_add_4_expect_8(void)
 {
   Stack *operand, *operator;
   IntegerToken inttoken = {TOKEN_INTEGER_TYPE, "4", 4};
@@ -73,22 +73,24 @@ void test_computeExpression_calculate_80_divide_2(void)
   push(&operand, &inttoken2);
   push(&operator, &optoken);
 
-  TEST_ASSERT_EQUAL(8,computeExpression(&operand ,&operator));
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  //TEST_ASSERT_EQUAL(8,computeExpression(&operand ,&operator));
 }
 
 void test_computeExpression_10_minus_4_expect_6(void)
 {
   Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,11 ,4 , "10", 10};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,11 ,4 , "5", 5};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , 0,0 , "-", };
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,"10", 10};
+  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,"5", 5};
+  OperatorToken optoken = {TOKEN_OPERATOR_TYPE , "-", };
 
   push(&operand,&inttoken);
   push(&operand, &inttoken2);
   push(&operator, &optoken);
 
-  TEST_ASSERT_EQUAL(5,computeExpression(&operand ,&operator));
-}*/
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  //TEST_ASSERT_EQUAL(5,computeExpression(&operand ,&operator));
+}
 
 void test_computeExpression_3_multiply_3_expect_9(void)
 {
@@ -97,16 +99,19 @@ void test_computeExpression_3_multiply_3_expect_9(void)
   IntegerToken intToken2 = {TOKEN_INTEGER_TYPE , "3", 3};
   OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "*", };
 
-  push(operand,&intToken);
-  push(operand, &intToken2);
-  //push(&operator, &optoken);
-  //computeExpression(&operand ,&opToken);
-  //IntegerToken *result =(IntegerToken *)pop(&operand);
-
+  push(&operand,&intToken);
+  push(&operand, &intToken2);
+  push(&operator, &opToken);
+//  printf("& of operand in test: %d\n",&operand);
+  computeExpression(&operand ,&opToken);
+  //printf("value operand in test after compute: %d\n",&operand);
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  //printf("address of result in test: %d\n",&result);
+//  printf("value of result in test: %d\n",result);
   //TEST_ASSERT_EQUAL(9, result->value );
 }
 
-/*void test_computeExpression_100_divide_5_expect_20(void)
+void test_computeExpression_100_divide_5_expect_20(void)
 {
   Stack *operand, *operator;
   IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,"100", 100};
@@ -117,5 +122,6 @@ void test_computeExpression_3_multiply_3_expect_9(void)
   push(&operand, &inttoken2);
   push(&operator, &optoken);
 
-  TEST_ASSERT_EQUAL(20,computeExpression(&operand ,&operator));
-}*/
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  //TEST_ASSERT_EQUAL(20,computeExpression(&operand ,&operator));
+}

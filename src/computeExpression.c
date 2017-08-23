@@ -16,6 +16,7 @@ Token *createNumberToken(int number)
 
 void computeExpression(Stack **operand , OperatorToken *operator)
 {
+	//printf("value operand in before  compute: %d\n",operand);
   int answer;
   IntegerToken *number, *number2;
   //Token *newResult;
@@ -23,10 +24,12 @@ void computeExpression(Stack **operand , OperatorToken *operator)
   number2 =(IntegerToken *)pop(operand);
 
   answer = calculate(operator,number,number2);
-  Token *newResult = createNumberToken(answer);
+  IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
+	//printf("address of new result: %d\n",&newResult);
 	//printf("newResult : %d\n",newResult->value);
   push(operand , &newResult);
-  printf("Answer : %d\n",answer);
+  //printf("Answer : %d\n",answer);
+//	printf("value operand after compute: %d\n",*operand);
 }
 
 int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number2)

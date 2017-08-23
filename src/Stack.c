@@ -20,34 +20,24 @@ Stack *initStack()
   return newstack;
 }
 
-Stack *push(Stack *stack, const void *data) {
-    printf("before Stack: %d\n",stack);
-    printf("data : %d\n" ,data);
+void push(Stack **stack, const void *data) {
     Stack *item = malloc(sizeof *item);
     item->data = data;
-    item->next = stack;
-    stack = item;
-    printf("Stack: %d\n",stack);
-    printf("&Stack: %d\n",&stack);
-    printf("item:  %d\n",item);
-    printf("&item:  %d\n",&item);
-    return stack;
+    item->next = *stack;
+    *stack = item;
 }
 
-const void *pop(Stack *stack)
-{
-    printf("%d\n",stack);
-    Stack *item = malloc(sizeof *item);
-    item = stack;
+const void *pop(Stack **stack) {
+    Stack *item = *stack;
     if(item == NULL)
     {
       printf("Stack is empty");
-    //Throw(createException("The stack is empty!",  \
+  //    Throw(createException("The stack is empty!",  \
                             stackempty));
     }
     else{
     const void *data = item->data;
-    stack = item->next;
+    *stack = item->next;
     free(item);
     return data;
   }
