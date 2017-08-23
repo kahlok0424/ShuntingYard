@@ -18,11 +18,11 @@ void tearDown(void)
 
 void test_push_stack_19_and_pop_19(void)
 {
-  Stack *stack1=NULL; // = malloc(sizeof *Stack);
+  Stack *stack1 = initStack(); // = malloc(sizeof *Stack);
   printf("stack1: %d\n",stack1);
   printf("%d\n",&stack1);
-  push(stack1,(void *)19 );
-  push(stack1,(void *)25 );
+  stack1 = push(&stack1,(void *)19 );
+  stack1 = push(&stack1,(void *)25 );
   printf("%d\n",stack1);
   TEST_ASSERT_EQUAL(25,pop(stack1));
   TEST_ASSERT_EQUAL(19, pop(stack1));

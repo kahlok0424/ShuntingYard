@@ -13,8 +13,16 @@ struct Stack {
     Stack *next;
 };
 
-void push(Stack *stack, const void *data) {
+Stack *initStack()
+{
+  Stack *newstack = malloc(sizeof *newstack);
+  newstack = NULL;
+  return newstack;
+}
+
+Stack *push(Stack *stack, const void *data) {
     printf("before Stack: %d\n",stack);
+    printf("data : %d\n" ,data);
     Stack *item = malloc(sizeof *item);
     item->data = data;
     item->next = stack;
@@ -23,7 +31,7 @@ void push(Stack *stack, const void *data) {
     printf("&Stack: %d\n",&stack);
     printf("item:  %d\n",item);
     printf("&item:  %d\n",&item);
-
+    return stack;
 }
 
 const void *pop(Stack *stack)

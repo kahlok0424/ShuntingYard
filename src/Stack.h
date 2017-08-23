@@ -5,8 +5,10 @@
 
 typedef struct Stack Stack;
 
+Stack *initStack();
+
 // Inserts an item at the top of the stack.
-void push(Stack *stack, const void *value);
+Stack *push(Stack *stack, const void *value);
 
 // Removes an item from the top of the stack.
 const void *pop(Stack *stack);
