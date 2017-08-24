@@ -13,7 +13,7 @@ void tearDown(void)
 {
 }
 
-void test_ShuntingYard_simple_expression_add(void)
+void xtest_ShuntingYard_simple_expression_add(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
   OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,"+", };

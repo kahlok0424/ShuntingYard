@@ -155,6 +155,33 @@ void test_ShuntingYard_NULL_token_expect_Exception(void)
   }
 }
 
+void test_evaluateOperatorToken_give_operator_token(void)
+{
+  Stack *operator;
+  operator = initStack();
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "*" };
+
+  evaluateOperatorToken(&operator,&opToken);
+
+}
+
+void test_evaluateOperatorToken_give_2_operator_token(void)
+{
+  Stack *operator;
+  operator = initStack();
+  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "*" };
+
+  push(&operator,&opToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    evaluateOperatorToken(&operator,&opToken);
+  }Catch(ex){
+    dumpException(ex);
+  }
+
+}
+
 /*void xtest_ShuntingYard_get_integer_token(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;

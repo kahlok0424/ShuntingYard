@@ -50,13 +50,13 @@ Token* shuntingYard(char *expression, double *result)
       {
         intToken = (IntegerToken *)token;
         push(&operand,(const void *)intToken);
-        printf("Integer Token Value = %d \n" , intToken->value);
+        //printf("Integer Token Value = %d \n" , intToken->value);
       }
       else if(token->type == TOKEN_OPERATOR_TYPE)
       {
         optoken = (OperatorToken *)token;
         push(&operator,(const void *)optoken);
-        printf("Operator Token = %s\n",optoken->str);
+      //  printf("Operator Token = %s\n",optoken->str);
       }
     }
     else
@@ -66,11 +66,11 @@ Token* shuntingYard(char *expression, double *result)
     }
   }
 
-  computeExpression(&operand,);
-  result = &testresult;
-  printf("result :%d \n",*result);
+  //computeExpression(&operand,);
+  //result = &testresult;
+  //printf("result :%d \n",*result);
   testToken =(IntegerToken *)pop(&operand);
-  printf("Test Token value = %d\n",testToken->value);
+  //printf("Test Token value = %d\n",testToken->value);
   return testToken;
 
   if(currentToken->type == TOKEN_NULL_TYPE){
@@ -78,33 +78,17 @@ Token* shuntingYard(char *expression, double *result)
                        , NULLTOKEN)); }
 }
 
-/*void push_operator(const Operator *operator, Stack **operands,
-                     Stack **operators) {
-    if (!operator)
-        return ERROR_SYNTAX;
+void evaluateOperatorToken(Stack **operator ,OperatorToken *newToken)
+{
+  OperatorToken *previousToken;
+  previousToken = (OperatorToken *)pop(operator);
 
-    while (*operators && status == OK) {
-        const Operator *stack_operator = stack_top(*operators);
-        if (operator->arity == OPERATOR_UNARY ||
-                operator->precedence < stack_operator->precedence ||
-                (operator->associativity == OPERATOR_RIGHT &&
-                 operator->precedence == stack_operator->precedence))
-            break;
+  if(previousToken == NULL){
+    push(operator , newToken);
+  }
+  else{
+    Throw(createException("error" \
+                         , SAMETOKEN));
+  }
 
-        apply_operator(stack_pop(operators), operands);
-    }
-    stack_push(operators, operator);
-    return result;
 }
-
-
-void push_number(const char *value, Stack **operands) {
-    char *end_pointer = NULL;
-    double x = strtod(value, &end_pointer);
-
-    // If not all of the value is converted, the rest is invalid.
-    if (value + strlen(value) != end_pointer)
-        return ERROR_SYNTAX;
-    push_double(x, operands);
-    return OK;
-}*/
