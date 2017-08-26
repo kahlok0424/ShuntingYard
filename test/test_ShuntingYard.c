@@ -158,29 +158,50 @@ void test_ShuntingYard_NULL_token_expect_Exception(void)
 void test_evaluateOperatorToken_give_operator_token(void)
 {
   Stack *operator;
+  Stack *operand;
   operator = initStack();
-  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "*" };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[0] };
 
-  evaluateOperatorToken(&operator,&opToken);
+  evaluateOperatorToken(&operator,&operand,&mulToken);
 
 }
 
-void test_evaluateOperatorToken_give_2_operator_token(void)
+void test_evaluateOperatorToken_give_lower_precedence_operator(void)
 {
   Stack *operator;
+  Stack *operand;
   operator = initStack();
-  OperatorToken opToken = {TOKEN_OPERATOR_TYPE , "*" };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[0] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[2] };
 
-  push(&operator,&opToken);
+  push(&operator,&mulToken);
 
   CEXCEPTION_T ex;
   Try{
-    evaluateOperatorToken(&operator,&opToken);
+    evaluateOperatorToken(&operator,&operand,&plusToken);
   }Catch(ex){
     dumpException(ex);
   }
-
 }
+
+void test_evaluateOperatorToken_give_higher_precedence_operator(void)
+{
+  Stack *operator;
+  Stack *operand;
+  operator = initStack();
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[0] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[2] };
+
+  push(&operator,&plusToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    evaluateOperatorToken(&operator,&operand,&mulToken);
+  }Catch(ex){
+    dumpException(ex);
+  }
+}
+
 
 /*void xtest_ShuntingYard_get_integer_token(void)
 {

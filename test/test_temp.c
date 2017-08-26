@@ -4,6 +4,7 @@
 #include "mock_Tokenizer.h"
 #include "Stack.h"
 #include "Exception.h"
+#include "computeExpression.h"
 
 void setUp(void)
 {
@@ -43,4 +44,26 @@ void xtest_ShuntingYard_simple_expression_add(void)
   }
   printf("lallala : %d\n", testToken->value);
   TEST_ASSERT_EQUAL(10,*result);
+}
+
+void test_evaluateOperatorToken_with_compute_expression(void)
+{
+  Stack *operator;
+  Stack *operand;
+  operator = initStack();
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[0] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[2] };
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"5",5 };
+  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",10 };
+
+  push(&operand,&intToken);
+  push(&operand,&intToken1);
+  push(&operator,&mulToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    evaluateOperatorToken(&operator,&operand,&plusToken);
+  }Catch(ex){
+    dumpException(ex);
+  }
 }

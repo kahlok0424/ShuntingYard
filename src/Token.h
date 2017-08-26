@@ -28,6 +28,26 @@ typedef enum {
 } Associativity;
 
 typedef struct {
+    char symbol;
+    int precedence;
+    Affix affix;
+    Associativity assoc;
+} Operator_info;
+
+static const Operator_info OPERATORS[] = {
+//  {'!', 1, OPERATOR_UNARY,  OPERATOR_LEFT},
+//    {'^', 2, OPERATOR_BINARY, OPERATOR_RIGHT},
+//    {'+', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
+//    {'-', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
+    {'*', 5, INFIX, LEFT_TO_RIGHT},
+    {'/', 5, INFIX, LEFT_TO_RIGHT},
+    {'%', 4, INFIX, LEFT_TO_RIGHT},
+    {'+', 4, INFIX, LEFT_TO_RIGHT},
+//    {'-', 5, OPERATOR_BINARY, OPERATOR_LEFT},
+//    {'(', 6, OPERATOR_OTHER,  OPERATOR_NONE}
+};
+
+typedef struct {
   TokenType type;
   uint32_t startColumn;
   uint32_t length;
@@ -62,7 +82,7 @@ typedef struct {
 //uint32_t startColumn;\
   uint32_t length;
   char *str;
-  Token *token[0];
+  Operator_info *info;
 } OperatorToken;
 
 typedef struct {

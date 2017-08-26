@@ -26,8 +26,10 @@ void computeExpression(Stack **operand , OperatorToken *operator)
   answer = calculate(operator,number,number2);
   IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
 	//printf("address of new result: %d\n",&newResult);
-	//printf("newResult : %d\n",newResult->value);
+	printf("newResult : %d\n",newResult->value);
   push(operand , &newResult);
+	IntegerToken *result = (IntegerToken *)pop(operand);
+	printf("result: %d\n",result->value);
   //printf("Answer : %d\n",answer);
 //	printf("value operand after compute: %d\n",*operand);
 }

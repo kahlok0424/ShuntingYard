@@ -6,7 +6,7 @@
 
 Token *createNumberToken(int number);
 Token* shuntingYard(char *expression, double *result);
-void evaluateOperatorToken(Stack **operator ,OperatorToken *newToken);
+void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newToken);
 
 //double computeExpression(Stack *operand , Stack *operators);
 

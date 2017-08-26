@@ -11,25 +11,6 @@
 #define SAMETOKEN 1
 #define NULLTOKEN 2
 
-typedef struct {
-    char symbol;
-    int precedence;
-    Affix affix;
-    Associativity assoc;
-} Operator;
-
-static const Operator OPERATORS[] = {
-//  {'!', 1, OPERATOR_UNARY,  OPERATOR_LEFT},
-//    {'^', 2, OPERATOR_BINARY, OPERATOR_RIGHT},
-//    {'+', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
-//    {'-', 3, OPERATOR_UNARY,  OPERATOR_RIGHT},
-    {'*', 4, INFIX, LEFT_TO_RIGHT},
-    {'/', 4, INFIX, LEFT_TO_RIGHT},
-    {'%', 4, INFIX, LEFT_TO_RIGHT},
-    {'+', 5, INFIX, LEFT_TO_RIGHT},
-//    {'-', 5, OPERATOR_BINARY, OPERATOR_LEFT},
-//    {'(', 6, OPERATOR_OTHER,  OPERATOR_NONE}
-};
 
 Token* shuntingYard(char *expression, double *result)
 {
@@ -71,14 +52,14 @@ Token* shuntingYard(char *expression, double *result)
   //printf("result :%d \n",*result);
   testToken =(IntegerToken *)pop(&operand);
   //printf("Test Token value = %d\n",testToken->value);
-  return testToken;
+  return token;
 
   if(currentToken->type == TOKEN_NULL_TYPE){
     Throw(createException("NULL Token detected! End of expression." \
                        , NULLTOKEN)); }
 }
 
-void evaluateOperatorToken(Stack **operator ,OperatorToken *newToken)
+void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newToken)
 {
   OperatorToken *previousToken;
   previousToken = (OperatorToken *)pop(operator);
@@ -87,8 +68,11 @@ void evaluateOperatorToken(Stack **operator ,OperatorToken *newToken)
     push(operator , newToken);
   }
   else{
-    Throw(createException("error" \
-                         , SAMETOKEN));
+   if(newToken->info->precedence > previousToken->info->precedence){
+     printf("lol");
+     }
+  else{
+    computeExpression(operand,previousToken);
+    }
   }
-
 }
