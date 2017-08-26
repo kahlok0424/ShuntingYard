@@ -1,11 +1,11 @@
 #include <malloc.h>
 #include "CreateToken.h"
 
-Token *createInteger(int value) {
+Token *createInteger(int value){
   IntegerToken *intToken = malloc(sizeof(IntegerToken));
   intToken->type = TOKEN_INTEGER_TYPE;
   intToken->value = value;
-  return (Token *)intToken;
+  return intToken;
 }
 
 Token *createOperator(char *symbol) {

@@ -4,7 +4,6 @@
 #include "Token.h"
 #include "Stack.h"
 #include "Tokenizer.h"
-#include "Token.h"
 #include "CException.h"
 #include "computeExpression.h"
 

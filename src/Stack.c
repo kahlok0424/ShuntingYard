@@ -3,7 +3,7 @@
 #include "CExceptionConfig.h"
 #include "Exception.h"
 #include <stdlib.h>
-#include "Token.h"
+//#include "Token.h"
 
 #define stackempty 0
 #define stackfulled 1

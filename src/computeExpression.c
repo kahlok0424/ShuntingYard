@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "computeExpression.h"
 #include "Token.h"
-#include "Tokenizer.h"
+//#include "Tokenizer.h"
 #include "Stack.h"
 
 Token *createNumberToken(int number)
@@ -16,22 +16,21 @@ Token *createNumberToken(int number)
 
 void computeExpression(Stack **operand , OperatorToken *operator)
 {
-	//printf("value operand in before  compute: %d\n",operand);
   int answer;
   IntegerToken *number, *number2;
-  //Token *newResult;
   number =(IntegerToken *)pop(operand);
   number2 =(IntegerToken *)pop(operand);
 
   answer = calculate(operator,number,number2);
   IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
-	//printf("address of new result: %d\n",&newResult);
-	printf("newResult : %d\n",newResult->value);
-  push(operand , &newResult);
-	IntegerToken *result = (IntegerToken *)pop(operand);
-	printf("result: %d\n",result->value);
-  //printf("Answer : %d\n",answer);
-//	printf("value operand after compute: %d\n",*operand);
+	//printf("address of new result: %d\n",newResult);
+//	printf("newResult : %d\n",newResult->value);
+  push(operand , newResult);
+	//printf("value of operand: %d\n",*operand);
+	//IntegerToken *result;
+	//result = (IntegerToken *)pop(operand);
+	//printf("address of result: %d\n",&result);
+	//printf("result: %d\n",result->value);
 }
 
 int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number2)

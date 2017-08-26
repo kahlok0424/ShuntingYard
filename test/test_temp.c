@@ -46,15 +46,15 @@ void xtest_ShuntingYard_simple_expression_add(void)
   TEST_ASSERT_EQUAL(10,*result);
 }
 
-void test_evaluateOperatorToken_with_compute_expression(void)
+void xtest_evaluateOperatorToken_with_compute_expression(void)
 {
   Stack *operator;
   Stack *operand;
   operator = initStack();
-  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[0] };
-  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS[2] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[2] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "+",&OPERATORS_TABLE[0] };
   IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"5",5 };
-  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",10 };
+  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"10",10 };
 
   push(&operand,&intToken);
   push(&operand,&intToken1);
@@ -63,6 +63,9 @@ void test_evaluateOperatorToken_with_compute_expression(void)
   CEXCEPTION_T ex;
   Try{
     evaluateOperatorToken(&operator,&operand,&plusToken);
+    IntegerToken *result;
+  	result = (IntegerToken *)pop(&operand);
+    TEST_ASSERT_EQUAL(50, result->value);
   }Catch(ex){
     dumpException(ex);
   }

@@ -1,7 +1,6 @@
 #ifndef _STACK_H
 #define _STACK_H
 #define MAXSTACK 12
-#include "Token.h"
 
 typedef struct Stack Stack;
 
