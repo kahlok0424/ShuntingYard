@@ -17,27 +17,25 @@ Token* shuntingYard(char *expression)
   Stack *operator = initStack();
   Tokenizer *tokenizer = initTokenizer(expression);
   IntegerToken *intToken, *resultToken;
-  OperatorToken *optoken;
-  Token *currentToken = peepToken(tokenizer);
-  Token *token ;
+  OperatorToken *opToken;
+  //Token *currentToken = peepToken(tokenizer);
+  Token *token = getToken(tokenizer);
+  Token *previousToken;
 
-  while(currentToken->type != TOKEN_NULL_TYPE)
+  while(token->type != TOKEN_NULL_TYPE)
   {
-    currentToken = peepToken(tokenizer);
-    if(currentToken->type != token->type)
+    //previousToken = token;
+    if(token->type != previousToken->type)
     {
-      token = getToken(tokenizer);
       if(token->type == TOKEN_INTEGER_TYPE)
       {
         intToken = (IntegerToken *)token;
         push(&operand,(const void *)intToken);
-        //printf("Integer Token Value = %d \n" , intToken->value);
       }
       else if(token->type == TOKEN_OPERATOR_TYPE)
       {
-        optoken = (OperatorToken *)token;
-        push(&operator,(const void *)optoken);
-      //  printf("Operator Token = %s\n",optoken->str);
+        opToken = (OperatorToken *)token;
+        evaluateOperatorToken(&operator,&operand,opToken);
       }
     }
     else
@@ -45,6 +43,7 @@ Token* shuntingYard(char *expression)
       Throw(createException("Invalid Token ,token is the same type of previous!" \
                            , SAMETOKEN));
     }
+    token = getToken(tokenizer);
   }
 
   //computeExpression(&operand,);
@@ -54,7 +53,7 @@ Token* shuntingYard(char *expression)
   //printf("Test Token value = %d\n",testToken->value);
   return token;
 
-  if(currentToken->type == TOKEN_NULL_TYPE){
+  if(token->type == TOKEN_NULL_TYPE){
     Throw(createException("NULL Token detected! End of expression." \
                        , NULLTOKEN)); }
 }

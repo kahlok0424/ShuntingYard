@@ -14,7 +14,7 @@ void tearDown(void)
 {
 }
 
-void xtest_ShuntingYard_simple_expression_add(void)
+/*void xtest_ShuntingYard_simple_expression_add(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
   OperatorToken opToken1 = {TOKEN_OPERATOR_TYPE ,"+", };
@@ -44,7 +44,7 @@ void xtest_ShuntingYard_simple_expression_add(void)
   }
   printf("lallala : %d\n", testToken->value);
   TEST_ASSERT_EQUAL(10,*result);
-}
+}*/
 
 void xtest_evaluateOperatorToken_with_compute_expression(void)
 {
@@ -69,4 +69,31 @@ void xtest_evaluateOperatorToken_with_compute_expression(void)
   }Catch(ex){
     dumpException(ex);
   }
+}
+
+void test_ShuntingYard_simple_expression_add_1(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",5 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "5+5";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken1);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken1);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  printf("lallala : %d\n", testToken->value);
+  //TEST_ASSERT_EQUAL(10,*result);
 }
