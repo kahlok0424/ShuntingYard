@@ -2,6 +2,8 @@
 #include "computeExpression.h"
 #include "Token.h"
 //#include "Tokenizer.h"
+#include "Exception.h"
+#include "CExceptionConfig.h"
 #include "Stack.h"
 
 void setUp(void)

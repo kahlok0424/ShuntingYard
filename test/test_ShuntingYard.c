@@ -4,6 +4,7 @@
 #include "mock_Tokenizer.h"
 #include "Stack.h"
 #include "Exception.h"
+#include "CExceptionConfig.h"
 #include "computeExpression.h"
 
 void setUp(void)
@@ -168,7 +169,12 @@ void test_evaluateOperatorToken_give_operator_token(void)
   push(&operand,&intToken);
   push(&operand,&intToken1);
 
-  evaluateOperatorToken(&operator,&operand,&mulToken);
+  CEXCEPTION_T ex;
+  Try{
+    evaluateOperatorToken(&operator,&operand,&mulToken);
+  }Catch(ex){
+    dumpException(ex);
+  }
 
 }
 
@@ -265,6 +271,8 @@ void test_evaluateOperatorToken_with_compute_expression_2_add_5(void)
     dumpException(ex);
   }
 }
+
+
 
 /*void xtest_ShuntingYard_get_integer_token(void)
 {

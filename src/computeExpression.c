@@ -24,7 +24,7 @@ void computeExpression(Stack **operand , OperatorToken *operator)
   answer = calculate(operator,number,number2);
   IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
 	//printf("address of new result: %d\n",newResult);
-//	printf("newResult : %d\n",newResult->value);
+ //printf("newResult : %d\n",newResult->value);
   push(operand , newResult);
 	//printf("value of operand: %d\n",*operand);
 	//IntegerToken *result;
@@ -39,9 +39,9 @@ int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number
   int x = number2->value;
   char z= *(operator->str);
 
-  printf("X = %d\n",x);
-  printf("y = %d\n",y);
-  printf("op = %c\n",z);
+//  printf("X = %d\n",x);    \
+  printf("y = %d\n",y);    \
+  printf("op = %c\n",z);   \
 
   switch(z){
   case '+':

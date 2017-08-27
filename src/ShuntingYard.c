@@ -11,14 +11,15 @@
 #define NULLTOKEN 2
 
 
-Token* shuntingYard(char *expression, double *result)
+Token* shuntingYard(char *expression)
 {
-  Stack *operand = NULL ,*operator = NULL;
+  Stack *operand = initStack();
+  Stack *operator = initStack();
   Tokenizer *tokenizer = initTokenizer(expression);
-  IntegerToken *intToken, *testToken;
+  IntegerToken *intToken, *resultToken;
   OperatorToken *optoken;
   Token *currentToken = peepToken(tokenizer);
-  Token *token;
+  Token *token ;
 
   while(currentToken->type != TOKEN_NULL_TYPE)
   {
@@ -49,7 +50,7 @@ Token* shuntingYard(char *expression, double *result)
   //computeExpression(&operand,);
   //result = &testresult;
   //printf("result :%d \n",*result);
-  testToken =(IntegerToken *)pop(&operand);
+  resultToken =(IntegerToken *)pop(&operand);
   //printf("Test Token value = %d\n",testToken->value);
   return token;
 
@@ -68,10 +69,12 @@ void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newT
   }
   else{
    if(newToken->info->precedence > previousToken->info->precedence){
-     printf("lol");
+     //printf("It goes to here");
+     push(operator , newToken);
      }
   else{
     computeExpression(operand,previousToken);
+    push(operator , newToken);
     }
   }
 }

@@ -5,7 +5,7 @@
 #include "Stack.h"
 
 Token *createNumberToken(int number);
-Token* shuntingYard(char *expression, double *result);
+Token* shuntingYard(char *expression);
 void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newToken);
 
 //double computeExpression(Stack *operand , Stack *operators);
