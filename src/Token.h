@@ -34,7 +34,7 @@ typedef struct {
     Associativity assoc;
 } Operator_info;
 
-static const Operator_info OPERATORS_TABLE[] = {
+Operator_info OPERATORS_TABLE[] = {
 //  {'!', 1, OPERATOR_UNARY,  OPERATOR_LEFT},
 //    {'^', 2, OPERATOR_BINARY, OPERATOR_RIGHT},
     {'+', 3, INFIX, LEFT_TO_RIGHT},
