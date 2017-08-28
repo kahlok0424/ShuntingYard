@@ -49,8 +49,8 @@ static const Operator_info OPERATORS_TABLE[] = {
 
 typedef struct {
   TokenType type;
-  uint32_t startColumn;
-  uint32_t length;
+//  uint32_t startColumn;
+//  uint32_t length;
   char *str;
 } Token;
 

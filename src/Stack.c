@@ -31,8 +31,8 @@ const void *pop(Stack **stack) {
     Stack *item = *stack;
     if(item == NULL)
     {
-      //printf("Stack is empty");
-      Throw(createException("The stack is empty!",  \
+      printf("Stack is empty\n");
+      //Throw(createException("The stack is empty!",  \
                             stackempty));
     }
     else{
