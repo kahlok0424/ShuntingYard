@@ -182,8 +182,8 @@ void test_evaluateOperatorToken_give_lower_precedence_operator(void)
   Stack *operator;
   Stack *operand;
   operator = initStack();
-  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[0] };
-  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[2] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[2] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "+",&OPERATORS_TABLE[0] };
   IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"5",5 };
   IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"10",10 };
 
@@ -204,8 +204,8 @@ void test_evaluateOperatorToken_give_higher_precedence_operator(void)
   Stack *operator;
   Stack *operand;
   operator = initStack();
-  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*", &OPERATORS_TABLE[0] };
-  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*", &OPERATORS_TABLE[2] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*", &OPERATORS_TABLE[2] };
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "+", &OPERATORS_TABLE[0] };
   IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"5",5 };
   IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"10",10 };
 
@@ -308,7 +308,6 @@ void test_ShuntingYard_simple_expression_add_10(void)
   IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",5 };
   IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"10",10 };
   IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
-  FloatToken fToken = {TOKEN_FLOAT_TYPE,"bla",0};
   Token *token;
   IntegerToken *testToken;
   char *expression = "5+5+10";
@@ -365,7 +364,7 @@ void test_ShuntingYard_simple_expression_mul_10(void)
     dumpException(ex);
   }
   //printf("Token returned from SY : %d\n", testToken->value);
-  TEST_ASSERT_EQUAL(50,testToken->value);
+  TEST_ASSERT_EQUAL(55,testToken->value);
 }
 
 /*void xtest_ShuntingYard_get_integer_token(void)

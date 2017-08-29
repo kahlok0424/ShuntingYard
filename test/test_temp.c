@@ -98,7 +98,7 @@ void test_ShuntingYard_simple_expression_add_1(void)
   }Catch(ex){
     dumpException(ex);
   }
-  printf("Token returned from SY : %d\n", testToken->value);
+  //printf("Token returned from SY : %d\n", testToken->value);
   //TEST_ASSERT_EQUAL(10,*result);
 }
 
@@ -131,7 +131,7 @@ void test_ShuntingYard_simple_expression_add_10(void)
   }Catch(ex){
     dumpException(ex);
   }
-  printf("Token returned from SY : %d\n", testToken->value);
+  //printf("Token returned from SY : %d\n", testToken->value);
   //TEST_ASSERT_EQUAL(10,*result);
 }
 
@@ -141,12 +141,13 @@ void test_ShuntingYard_simple_expression_mul_10(void)
   OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
   OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
   IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",5 };
-  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken3 = {TOKEN_INTEGER_TYPE ,"10",10 };
   IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   FloatToken fToken = {TOKEN_FLOAT_TYPE,"bla",0};
   Token *token;
   IntegerToken *testToken;
-  char *expression = "5+5*10";
+  char *expression = "5+2*10";
   double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
@@ -154,9 +155,9 @@ void test_ShuntingYard_simple_expression_mul_10(void)
   peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken1);
   getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken1);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken3);
   getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
 
   CEXCEPTION_T ex;
@@ -165,6 +166,6 @@ void test_ShuntingYard_simple_expression_mul_10(void)
   }Catch(ex){
     dumpException(ex);
   }
-  printf("Token returned from SY : %d\n", testToken->value);
-  //TEST_ASSERT_EQUAL(10,*result);
+  //printf("Token returned from SY : %d\n", testToken->value);
+  TEST_ASSERT_EQUAL(25,testToken->value);
 }

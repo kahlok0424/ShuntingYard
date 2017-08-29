@@ -67,6 +67,7 @@ void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newT
   else{
    if(newToken->info->precedence > previousToken->info->precedence){
      //printf("It goes to here");
+     push(operator,previousToken);
      push(operator , newToken);
      }
   else{
