@@ -78,14 +78,3 @@ void test_push_integerToken_into_stack(void)
   result = pop_double(&stack);
   TEST_ASSERT_EQUAL(7,result);
 }*/
-
-void xtest_randomtest(void)
-{
-   char str[30] = "20.200 This is test ";
-   char *ptr;
-   double ret;
-
-   ret = strtod(str, &ptr);
-   printf("The number(double) is %lf\n", ret);
-   printf("String part is |%s|", ptr);
-}

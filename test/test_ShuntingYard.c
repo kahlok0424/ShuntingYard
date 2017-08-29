@@ -6,6 +6,7 @@
 #include "Exception.h"
 #include "CExceptionConfig.h"
 #include "computeExpression.h"
+#include "Operator.h"
 
 void setUp(void)
 {

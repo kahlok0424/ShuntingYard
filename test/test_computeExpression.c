@@ -1,7 +1,7 @@
 #include "unity.h"
 #include "computeExpression.h"
 #include "Token.h"
-//#include "Tokenizer.h"
+#include "Operator.h"
 #include "Exception.h"
 #include "CExceptionConfig.h"
 #include "Stack.h"

@@ -5,6 +5,7 @@
 #include "Stack.h"
 #include "Exception.h"
 #include "computeExpression.h"
+#include "Operator.h"
 
 void setUp(void)
 {
