@@ -26,8 +26,7 @@ Token* shuntingYard(char *expression)
   {
     if(token->type != previousToken->type)
     {
-      token = getToken(tokenizer);
-      //previousToken = token;
+      previousToken =(Token *)token;
       if(token->type == TOKEN_INTEGER_TYPE)
       {
         intToken = (IntegerToken *)token;
@@ -38,6 +37,7 @@ Token* shuntingYard(char *expression)
         opToken = (OperatorToken *)token;
         evaluateOperatorToken(&operator,&operand,opToken);
       }
+      token = getToken(tokenizer);
     }
     else
     {
