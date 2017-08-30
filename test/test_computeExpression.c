@@ -106,24 +106,5 @@ void test_computeExpression_3_multiply_3_expect_9(void)
   push(&operator, &opToken);
 //  printf("& of operand in test: %d\n",&operand);
   computeExpression(&operand ,&opToken);
-  //printf("value operand in test after compute: %d\n",&operand);
-  //IntegerToken *result =(IntegerToken *)pop(&operand);
-  //printf("address of result in test: %d\n",&result);
-//  printf("value of result in test: %d\n",result);
   //TEST_ASSERT_EQUAL(9, result->value );
 }
-
-/*void test_computeExpression_100_divide_5_expect_20(void)
-{
-  Stack *operand, *operator;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,"100", 100};
-  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE ,"5", 5};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,"/", &OPERATORS[3]};
-
-  push(&operand,&inttoken);
-  push(&operand, &inttoken2);
-  push(&operator, &optoken);
-
-  IntegerToken *result =(IntegerToken *)pop(&operand);
-  //TEST_ASSERT_EQUAL(20,computeExpression(&operand ,&operator));
-}*/

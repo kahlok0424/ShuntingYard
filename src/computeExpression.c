@@ -23,14 +23,8 @@ void computeExpression(Stack **operand , OperatorToken *operator)
 
   answer = calculate(operator,number,number2);
   IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
-	//printf("address of new result: %d\n",newResult);
- //printf("newResult : %d\n",newResult->value);
+
   push(operand , newResult);
-	//printf("value of operand: %d\n",*operand);
-	//IntegerToken *result;
-	//result = (IntegerToken *)pop(operand);
-	//printf("address of result: %d\n",&result);
-	//printf("result: %d\n",result->value);
 }
 
 int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number2)
@@ -63,7 +57,7 @@ int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number
 	case '%':
 	x = x%y;
 	break;
-	
+
   default:
   return 0;
   }
