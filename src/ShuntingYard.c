@@ -41,7 +41,7 @@ Token* shuntingYard(char *expression)
     }
     else
     {
-      Throw(createException("Invalid expression ,token is the same type of previous!" \
+      Throw(createException("Invalid! Token is the same type of previous!" \
                            , SAMETOKEN));
     }
   }
@@ -51,9 +51,9 @@ Token* shuntingYard(char *expression)
   //printf("Test Token value = %d\n",testToken->value);
   return (Token *)resultToken;
 
-  if(token->type == TOKEN_NULL_TYPE){
+/*  if(token->type == TOKEN_NULL_TYPE){
     Throw(createException("NULL Token detected! End of expression." \
-                       , NULLTOKEN)); }
+                       , NULLTOKEN)); }*/
 }
 
 void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newToken)

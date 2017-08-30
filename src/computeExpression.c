@@ -60,6 +60,10 @@ int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number
   x = x/y;
   break;
 
+	case '%':
+	x = x%y;
+	break;
+	
   default:
   return 0;
   }
