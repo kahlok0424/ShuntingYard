@@ -89,7 +89,7 @@ void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
 {
   OperatorToken *previousToken;
   previousToken = (OperatorToken *)pop(operator);
-  while(*(newToken->str) != ')'){
+
   if(previousToken == NULL){
     push(operator , newToken);
   }
@@ -104,5 +104,4 @@ void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
     push(operator , newToken);
     }
   }
-}
 }

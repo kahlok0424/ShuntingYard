@@ -80,6 +80,54 @@ void test_computeInfix_50_add_30(void)
   TEST_ASSERT_EQUAL(80, result->value );
 }
 
+void test_computeInfix_77_minus_7(void)
+{
+  Stack *operand, *operator;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE, "77", 77};
+  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE, "7", 7};
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "-",&OPERATORS_TABLE[1] };
+
+  push(&operand,&inttoken);
+  push(&operand, &inttoken2);
+  push(&operator, &plusToken);
+
+  computeInfix(&operand ,&plusToken);
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  TEST_ASSERT_EQUAL(70, result->value );
+}
+
+void test_computeInfix_25_mul_5_expect_125(void)
+{
+  Stack *operand, *operator;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE, "25", 25};
+  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE, "5", 5};
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[2] };
+
+  push(&operand,&inttoken);
+  push(&operand, &inttoken2);
+  push(&operator, &plusToken);
+
+  computeInfix(&operand ,&plusToken);
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  TEST_ASSERT_EQUAL(125, result->value );
+}
+
+void test_computeInfix_90_divide_2(void)
+{
+  Stack *operand, *operator;
+  IntegerToken inttoken = {TOKEN_INTEGER_TYPE, "90", 90};
+  IntegerToken inttoken2 = {TOKEN_INTEGER_TYPE, "2", 2};
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "/",&OPERATORS_TABLE[3] };
+
+  push(&operand,&inttoken);
+  push(&operand, &inttoken2);
+  push(&operator, &plusToken);
+
+  computeInfix(&operand ,&plusToken);
+  IntegerToken *result =(IntegerToken *)pop(&operand);
+  TEST_ASSERT_EQUAL(45, result->value );
+}
+
 void test_computeExpression_4_add_4_expect_8(void)
 {
   Stack *operand, *operator;

@@ -68,13 +68,7 @@ void test_evaluateOperatorToken_give_operator_token(void)
   push(&operand,&intToken);
   push(&operand,&intToken1);
 
-  CEXCEPTION_T ex;
-  Try{
     evaluateOperatorToken(&operator,&operand,&mulToken);
-  }Catch(ex){
-    dumpException(ex);
-  }
-
 }
 
 void test_evaluateOperatorToken_give_lower_precedence_operator(void)
@@ -91,12 +85,7 @@ void test_evaluateOperatorToken_give_lower_precedence_operator(void)
   push(&operand,&intToken1);
   push(&operator,&mulToken);
 
-  CEXCEPTION_T ex;
-  Try{
     evaluateOperatorToken(&operator,&operand,&plusToken);
-  }Catch(ex){
-    dumpException(ex);
-  }
 }
 
 void test_evaluateOperatorToken_give_higher_precedence_operator(void)
@@ -113,15 +102,10 @@ void test_evaluateOperatorToken_give_higher_precedence_operator(void)
   push(&operand,&intToken1);
   push(&operator,&plusToken);
 
-  CEXCEPTION_T ex;
-  Try{
     evaluateOperatorToken(&operator,&operand,&mulToken);
-  }Catch(ex){
-    dumpException(ex);
-  }
 }
 
-void test_evaluateOperatorToken_with_compute_expression_10_mul_5(void)
+void test_evaluateOperatorToken_with_computeExpression_10_mul_5(void)
 {
   Stack *operator;
   Stack *operand;
@@ -135,18 +119,13 @@ void test_evaluateOperatorToken_with_compute_expression_10_mul_5(void)
   push(&operand,&intToken1);
   push(&operator,&mulToken);
 
-  CEXCEPTION_T ex;
-  Try{
     evaluateOperatorToken(&operator,&operand,&plusToken);
     IntegerToken *result;
   	result = (IntegerToken *)pop(&operand);
     TEST_ASSERT_EQUAL(50, result->value);
-  }Catch(ex){
-    dumpException(ex);
-  }
 }
 
-void test_evaluateOperatorToken_with_compute_expression_2_add_5(void)
+void test_evaluateOperatorToken_with_computeExpression_2_add_5(void)
 {
   Stack *operator;
   Stack *operand;
@@ -160,15 +139,54 @@ void test_evaluateOperatorToken_with_compute_expression_2_add_5(void)
   push(&operand,&intToken1);
   push(&operator,&mulToken);
 
-  CEXCEPTION_T ex;
-  Try{
     evaluateOperatorToken(&operator,&operand,&plusToken);
     IntegerToken *result;
   	result = (IntegerToken *)pop(&operand);
     TEST_ASSERT_EQUAL(10, result->value);
-  }Catch(ex){
-    dumpException(ex);
-  }
+}
+
+void test_evaluateStack_2_add_2_add_2_add_2_expect_8(void)
+{
+  Stack *operator = initStack();
+  Stack *operand = initStack();
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE , "+",&OPERATORS_TABLE[0] };
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"2",2 };
+
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operator,&plusToken);
+  push(&operator,&plusToken);
+  push(&operator,&plusToken);
+
+    evaluateStack(&operator,&operand);
+    IntegerToken *result;
+  	result = (IntegerToken *)pop(&operand);
+    TEST_ASSERT_EQUAL(8, result->value);
+
+}
+
+void test_evaluateStack_2_mul_2_mul_2_mul_2_expect_16(void)
+{
+  Stack *operator = initStack();
+  Stack *operand = initStack();
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE , "*",&OPERATORS_TABLE[2] };
+  IntegerToken intToken = {TOKEN_INTEGER_TYPE ,"2",2 };
+
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operand,&intToken);
+  push(&operator,&mulToken);
+  push(&operator,&mulToken);
+  push(&operator,&mulToken);
+
+    evaluateStack(&operator,&operand);
+    IntegerToken *result;
+  	result = (IntegerToken *)pop(&operand);
+    TEST_ASSERT_EQUAL(16, result->value);
+
 }
 
 void test_ShuntingYard_add_expression1(void)
@@ -592,6 +610,35 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
   getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&minusToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    printf("%s= ",expression);
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+}
+
+void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expression2(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken3 = {TOKEN_INTEGER_TYPE ,"3",3 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "2*/3";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
+  //getToken_ExpectAndReturn(tokenizer , (Token *)&intToken3);
 
   CEXCEPTION_T ex;
   Try{
