@@ -639,7 +639,6 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
   peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
-  //getToken_ExpectAndReturn(tokenizer , (Token *)&intToken3);
 
   CEXCEPTION_T ex;
   Try{

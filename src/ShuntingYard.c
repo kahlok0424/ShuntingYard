@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ShuntingYard.h"
 #include "Token.h"
 #include "Stack.h"
@@ -93,15 +94,54 @@ void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
   if(previousToken == NULL){
     push(operator , newToken);
   }
-  else{
-   if(newToken->info->precedence > previousToken->info->precedence){
-     //printf("It goes to here");
-     push(operator,previousToken);
-     push(operator , newToken);
-     }
-  else{
-    computeExpression(operand,previousToken);
-    push(operator , newToken);
+  else if(previousToken != NULL && *(newToken->str) == ')'){
+    while(previousToken != NULL){
+
+      if( *(previousToken->str) == '(' ){
+        break;
+      }
+      else{
+         computeExpression(operand,previousToken);
+      }
+      previousToken =(OperatorToken *)pop(operator);
     }
   }
+}
+
+void evaluatePrefix2(OperatorToken *newToken,Stack *operand,Stack *operator)
+{
+	OperatorToken *previousToken=(OperatorToken*)pop(operator);
+	if(previousToken == NULL){
+		push(newToken,operator);
+	}
+	else{
+		while(previousToken!=NULL)
+		{
+			if(*(newToken->str) == ')'){
+
+				if( *(previousToken->str) == '('){
+					computePrefix(operand ,previousToken);
+					free(newToken);
+					if(*(previousToken->str) == '('){
+						previousToken=(OperatorToken*)pop(operator);
+						break;
+					}
+				}else {
+					computeExpression(operand,previousToken);
+				}
+			}else if(newToken->info->precedence >= previousToken->info->precedence || (OperatorToken *)*(previousToken->str) == '(' ){
+				break;
+			}
+			else{
+				computeExpression(operand,previousToken);
+			}
+			previousToken=(OperatorToken*)pop(operator);
+		}
+		if(previousToken!=NULL ){
+			push(previousToken,operator);
+		}
+		if(newToken->info->affix == PREFIX){
+			push(newToken,operator);
+		}
+	}
 }

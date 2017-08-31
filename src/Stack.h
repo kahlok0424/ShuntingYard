@@ -15,9 +15,4 @@ const void *pop(Stack **stack);
 // Returns the item at the top of the stack without removing it.
 const void *stack_top(const Stack *stack);
 
-//Push double onto the stack
-//void push_double(Stack **operands , double x);
-
-//double pop_double(Stack **operands);
-
 #endif // _STACK_H

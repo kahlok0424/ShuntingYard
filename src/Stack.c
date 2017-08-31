@@ -31,9 +31,7 @@ const void *pop(Stack **stack) {
     Stack *item = *stack;
     if(item == NULL)
     {
-      //printf("Stack is empty\n");
-      //Throw(createException("The stack is empty!",  \
-                            stackempty));
+      return 0;
     }
     else{
     const void *data = item->data;
@@ -47,18 +45,3 @@ const void *pop(Stack **stack) {
 const void *stack_top(const Stack *stack) {
     return stack->data;
 }
-
-//This is because the second parameter for func push is const void so \
-   i created another func to push integer using pointer
-/*void push_double(Stack **operands , double x) {
-    double *pointer = malloc(sizeof *pointer);
-    *pointer = x;
-    push(operands, pointer);
-}
-
-double pop_double(Stack **operands) {
-    const double *pointer = pop(operands);
-    double x = *pointer;
-    free((void *)pointer);
-    return x;
-}*/
