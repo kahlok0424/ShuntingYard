@@ -41,7 +41,7 @@ Token* shuntingYard(char *expression)
     }
     else
     {
-      Throw(createException("Invalid! Token is the same type of previous!" \
+      Throw(createException("Invalid Expression! Received 2 same token type!" \
                            , SAMETOKEN));
     }
   }
