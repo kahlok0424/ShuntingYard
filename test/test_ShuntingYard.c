@@ -568,19 +568,19 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception(void)
 {
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
   OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
-  OperatorToken minusToken = {TOKEN_OPERATOR_TYPE ,"-",&OPERATORS_TABLE[1] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
   IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
   IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   Token *token;
   IntegerToken *testToken;
-  char *expression = "2+-";
+  char *expression = "2+*";
   double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
   peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&minusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
 
   CEXCEPTION_T ex;
   Try{
@@ -596,11 +596,12 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
   Tokenizer *tokenizer = (Tokenizer *)0x0badface;
   OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
   OperatorToken minusToken = {TOKEN_OPERATOR_TYPE ,"-",&OPERATORS_TABLE[1] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
   IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
   IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   Token *token;
   IntegerToken *testToken;
-  char *expression = "2+2+-3";
+  char *expression = "2+2+/3";
   double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
@@ -609,7 +610,7 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
   getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
   getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&minusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
 
   CEXCEPTION_T ex;
   Try{
