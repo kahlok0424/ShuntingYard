@@ -16,12 +16,35 @@ Token *createNumberToken(int number)
 
 void computeExpression(Stack **operand , OperatorToken *operator)
 {
-  int answer;
+  if(operator->info->affix == PREFIX)
+	{
+		computePrefix(operand,operator);
+	}else{
+		computeInfix(operand,operator);
+	}
+}
+
+void computeInfix(Stack **operand,OperatorToken *operator)
+{
+	int answer;
   IntegerToken *number, *number2;
   number =(IntegerToken *)pop(operand);
   number2 =(IntegerToken *)pop(operand);
 
   answer = calculate(operator,number,number2);
+  IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
+
+  push(operand , newResult);
+}
+
+
+void computePrefix(Stack **operand,OperatorToken *operator)
+{
+	int answer;
+  IntegerToken *number, *number2;
+  number =(IntegerToken *)pop(operand);
+
+  answer = calculatePrefix(operator,number);
   IntegerToken *newResult =(IntegerToken *)createNumberToken(answer);
 
   push(operand , newResult);
@@ -57,6 +80,25 @@ int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number
 	case '%':
 	x = x%y;
 	break;
+
+  default:
+  return 0;
+  }
+  return x;
+}
+
+int calculatePrefix(OperatorToken *operator, IntegerToken *number)
+{
+  int x = number->value;
+  char z= *(operator->str);
+
+//  printf("X = %d\n",x);    \
+  printf("y = %d\n",y);    \
+  printf("op = %c\n",z);   \
+
+  switch(z){
+  case '(':
+	x = x;
 
   default:
   return 0;

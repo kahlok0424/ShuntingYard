@@ -84,3 +84,25 @@ void evaluateStack(Stack **operator, Stack **operand)
     computeExpression(operand,opToken);
   }
 }
+
+void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
+{
+  OperatorToken *previousToken;
+  previousToken = (OperatorToken *)pop(operator);
+  while(*(newToken->str) != ')'){
+  if(previousToken == NULL){
+    push(operator , newToken);
+  }
+  else{
+   if(newToken->info->precedence > previousToken->info->precedence){
+     //printf("It goes to here");
+     push(operator,previousToken);
+     push(operator , newToken);
+     }
+  else{
+    computeExpression(operand,previousToken);
+    push(operator , newToken);
+    }
+  }
+}
+}

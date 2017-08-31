@@ -601,17 +601,3 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
     dumpException(ex);
   }
 }
-
- void xtest_ShuntingYard(void)
-{
-  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
-  IntegerToken inttoken = {TOKEN_INTEGER_TYPE ,"22",22};
-  IntegerToken inttoken1 = {TOKEN_INTEGER_TYPE ,"44",44};
-  OperatorToken optoken = {TOKEN_OPERATOR_TYPE ,"+" , };
-
-  initTokenizer_ExpectAndReturn("22+44",tokenizer);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&inttoken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&optoken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&inttoken1);
-
-}
