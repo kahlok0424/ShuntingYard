@@ -10,6 +10,5 @@ void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newT
 void evaluateStack(Stack **operator, Stack **operand);
 void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken);
 
-void evaluatePrefix2(OperatorToken *newToken,Stack *operand,Stack *operator);
 
 #endif // _SHUNTINGYARD_H

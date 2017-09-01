@@ -648,3 +648,198 @@ void test_ShuntingYard_give_2_operator_token_expect_Cexception_in_between_expres
     dumpException(ex);
   }
 }
+
+void test_ShuntingYard_simple_expression_bracket_add(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken5 = {TOKEN_INTEGER_TYPE ,"5",5 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(5+10)";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken5);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL(15,testToken->value);
+  printf("%s= %d\n",expression,testToken->value);
+}
+
+void test_ShuntingYard_simple_expression_bracket_mul(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken7 = {TOKEN_INTEGER_TYPE ,"7",7 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(7*7)";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken7);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken7);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL(49,testToken->value);
+  printf("%s= %d\n",expression,testToken->value);
+}
+
+void test_ShuntingYard_simple_expression_bracket1(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken7 = {TOKEN_INTEGER_TYPE ,"7",7 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(7*2)+10";  //answer = 24
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken7);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL(24,testToken->value);
+  printf("%s= %d\n",expression,testToken->value);
+}
+
+void test_ShuntingYard_simple_expression_bracket2(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken8 = {TOKEN_INTEGER_TYPE ,"8",8 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "10*(8+2*2)+10/2";  //answer = 125
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken8);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL(125,testToken->value);
+  printf("%s= %d\n",expression,testToken->value);
+}
+
+
+void test_ShuntingYard_simple_expression_bracket3(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken5 = {TOKEN_INTEGER_TYPE ,"5",5 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(2*(5+2)+2)/2";  //answer = 8
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken5);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  TEST_ASSERT_EQUAL(8,testToken->value);
+  printf("%s= %d\n",expression,testToken->value);
+}

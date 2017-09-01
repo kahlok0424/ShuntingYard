@@ -11,6 +11,7 @@
 #define SAMETOKEN 1
 #define NULLTOKEN 2
 
+volatile int check = 0;
 
 Token* shuntingYard(char *expression)
 {
@@ -25,7 +26,7 @@ Token* shuntingYard(char *expression)
 
   while(token->type != TOKEN_NULL_TYPE)
   {
-    if(token->type != previousToken->type)
+    if(token->type != previousToken->type || *(token->str) == '(' || *(previousToken->str) == ')' )
     {
       previousToken =(Token *)token;
       if(token->type == TOKEN_INTEGER_TYPE)
@@ -36,7 +37,15 @@ Token* shuntingYard(char *expression)
       else if(token->type == TOKEN_OPERATOR_TYPE)
       {
         opToken = (OperatorToken *)token;
-        evaluateOperatorToken(&operator,&operand,opToken);
+        if(opToken->info->affix == INFIX){
+          evaluateOperatorToken(&operator,&operand,opToken);
+        }
+        else{
+          if(*(opToken->str) == '('){
+            check++;
+          }
+          evaluatePrefix(&operator,&operand,opToken);
+        }
       }
       token = getToken(tokenizer);
     }
@@ -49,12 +58,9 @@ Token* shuntingYard(char *expression)
 
   evaluateStack(&operator,&operand);
   resultToken =(IntegerToken *)pop(&operand);
+  //IntegerToken *testToken = (IntegerToken *)pop(&operand);
   //printf("Test Token value = %d\n",testToken->value);
   return (Token *)resultToken;
-
-/*  if(token->type == TOKEN_NULL_TYPE){
-    Throw(createException("NULL Token detected! End of expression." \
-                       , NULLTOKEN)); }*/
 }
 
 void evaluateOperatorToken(Stack **operator ,Stack **operand,OperatorToken *newToken)
@@ -95,9 +101,10 @@ void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
     push(operator , newToken);
   }
   else if(previousToken != NULL && *(newToken->str) == ')'){
+    check--;
     while(previousToken != NULL){
 
-      if( *(previousToken->str) == '(' ){
+      if(*(previousToken->str) == '(' ){
         break;
       }
       else{
@@ -106,42 +113,9 @@ void evaluatePrefix(Stack **operator, Stack **operand,OperatorToken *newToken)
       previousToken =(OperatorToken *)pop(operator);
     }
   }
-}
+  else{
+    push(operator,previousToken);
+    push(operator,newToken);
+  }
 
-void evaluatePrefix2(OperatorToken *newToken,Stack *operand,Stack *operator)
-{
-	OperatorToken *previousToken=(OperatorToken*)pop(operator);
-	if(previousToken == NULL){
-		push(newToken,operator);
-	}
-	else{
-		while(previousToken!=NULL)
-		{
-			if(*(newToken->str) == ')'){
-
-				if( *(previousToken->str) == '('){
-					computePrefix(operand ,previousToken);
-					free(newToken);
-					if(*(previousToken->str) == '('){
-						previousToken=(OperatorToken*)pop(operator);
-						break;
-					}
-				}else {
-					computeExpression(operand,previousToken);
-				}
-			}else if(newToken->info->precedence >= previousToken->info->precedence || (OperatorToken *)*(previousToken->str) == '(' ){
-				break;
-			}
-			else{
-				computeExpression(operand,previousToken);
-			}
-			previousToken=(OperatorToken*)pop(operator);
-		}
-		if(previousToken!=NULL ){
-			push(previousToken,operator);
-		}
-		if(newToken->info->affix == PREFIX){
-			push(newToken,operator);
-		}
-	}
 }

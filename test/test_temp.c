@@ -165,7 +165,7 @@ void test_ShuntingYard_simple_expression_mul_10(void)
   }
   //printf("Token returned from SY : %d\n", testToken->value);
   TEST_ASSERT_EQUAL(25,testToken->value);
-}
+}*/
 
 void test_ShuntingYard_simple_expression_div_10(void)
 {
@@ -173,25 +173,29 @@ void test_ShuntingYard_simple_expression_div_10(void)
   OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
   OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
   OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
-  IntegerToken intToken1 = {TOKEN_INTEGER_TYPE ,"5",5 };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken5 = {TOKEN_INTEGER_TYPE ,"5",5 };
   IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
-  IntegerToken intToken3 = {TOKEN_INTEGER_TYPE ,"10",10 };
-  IntegerToken intToken4 = {TOKEN_INTEGER_TYPE ,"3",3 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken intToken3 = {TOKEN_INTEGER_TYPE ,"3",3 };
   IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
   FloatToken fToken = {TOKEN_FLOAT_TYPE,"bla",0};
   Token *token;
   IntegerToken *testToken;
-  char *expression = "5+2*10/2";
+  char *expression = "5*(2+10)+2";
   double *result;
 
   initTokenizer_ExpectAndReturn( expression , tokenizer);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken1);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken5);
   peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
   getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken3);
-  getToken_ExpectAndReturn(tokenizer , (Token *)&divToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
   getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
   getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
 
@@ -202,10 +206,87 @@ void test_ShuntingYard_simple_expression_div_10(void)
     dumpException(ex);
   }
   //printf("Token returned from SY : %d\n", testToken->value);
-  TEST_ASSERT_EQUAL(15,testToken->value);
-}*/
+  TEST_ASSERT_EQUAL(62,testToken->value);
+}
 
-void test_evaluatePrefix_temp(void)
+void test_ShuntingYard_simple_expression_prefix_2(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken6 = {TOKEN_INTEGER_TYPE ,"6",6 };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken intToken3 = {TOKEN_INTEGER_TYPE ,"3",3 };
+  IntegerToken intToken4 = {TOKEN_INTEGER_TYPE ,"4",4 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(2+10*4)+6";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&mulToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken4);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken6);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  //printf("Token returned from SY : %d\n", testToken->value);
+  TEST_ASSERT_EQUAL(48,testToken->value);
+}
+
+void test_ShuntingYard_simple_expression_prefix_3(void)
+{
+  Tokenizer *tokenizer = (Tokenizer *)0x0badface;
+  OperatorToken plusToken = {TOKEN_OPERATOR_TYPE ,"+",&OPERATORS_TABLE[0] };
+  OperatorToken mulToken = {TOKEN_OPERATOR_TYPE ,"*",&OPERATORS_TABLE[2] };
+  OperatorToken divToken = {TOKEN_OPERATOR_TYPE ,"/",&OPERATORS_TABLE[3] };
+  OperatorToken openToken = {TOKEN_OPERATOR_TYPE ,"(",&OPERATORS_TABLE[5] };
+  OperatorToken closeToken = {TOKEN_OPERATOR_TYPE ,")",&OPERATORS_TABLE[6] };
+  IntegerToken intToken2 = {TOKEN_INTEGER_TYPE ,"2",2 };
+  IntegerToken intToken10 = {TOKEN_INTEGER_TYPE ,"10",10 };
+  IntegerToken nullToken = {TOKEN_NULL_TYPE ,"bla",0};
+  Token *token;
+  IntegerToken *testToken;
+  char *expression = "(2+10)";
+  double *result;
+
+  initTokenizer_ExpectAndReturn( expression , tokenizer);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&openToken);
+  peepToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken10);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&plusToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&intToken2);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&closeToken);
+  getToken_ExpectAndReturn(tokenizer , (Token *)&nullToken);
+
+  CEXCEPTION_T ex;
+  Try{
+    testToken = (IntegerToken *)shuntingYard(expression);
+  }Catch(ex){
+    dumpException(ex);
+  }
+  //printf("Token returned from SY : %d\n", testToken->value);
+  TEST_ASSERT_EQUAL(12,testToken->value);
+}
+
+/*void test_evaluatePrefix_temp(void)
 {
   Stack *operator = initStack();
   Stack *operand = initStack();
@@ -237,4 +318,4 @@ void test_evaluatePrefix_temp(void)
   	result = (IntegerToken *)pop(&operand);
     TEST_ASSERT_EQUAL(8, result->value);
 
-}
+}*/

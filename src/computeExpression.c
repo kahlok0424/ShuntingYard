@@ -56,9 +56,9 @@ int calculate(OperatorToken *operator, IntegerToken *number,IntegerToken *number
   int x = number2->value;
   char z= *(operator->str);
 
-//  printf("X = %d\n",x);    \
-  printf("y = %d\n",y);    \
-  printf("op = %c\n",z);   \
+/*  printf(" %d",x);     //for development
+	printf(" %c ",z);
+  printf(" %d = \n",y);*/
 
   switch(z){
   case '+':
